@@ -1,0 +1,14 @@
+# Created by http://gitignore.io
+
+### Linux ###
+.*
+!.gitignore
+!.git*
+*~
+
+
+### Dart ###
+.DS_Store
+packages
+.project
+pubspec.lock
