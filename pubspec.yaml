@@ -1,0 +1,9 @@
+name: PokerTimer
+version: 0.0.1
+description: A sample web application
+dependencies:
+  angular: any
+  browser: any
+  js: any
+  unittest: any
+  web_ui: any

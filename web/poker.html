@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>PokerTimer</title>
+    <link rel="stylesheet" href="poker.css">
+    <script src="packages/browser/interop.js"></script>
+  </head>
+  <body ng-app>
+  
+    <div ng-hide="true" class="border well loading">Wait, Dart is loading this awesome app...</div>
+    
+    <div poker-controller class="border well" ng-cloak>
+      <div>{{controller.timeElapsed}}</div>
+    
+    
+    </div>
+    <script type="application/dart" src="poker.dart"></script>
+    <script src="packages/browser/dart.js"></script>
+  </body>
+</html>
