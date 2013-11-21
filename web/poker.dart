@@ -23,39 +23,43 @@ class PokerController {
   static final NumberFormat _formatter = new NumberFormat("00", "en_US");
   static final Logger log = new Logger("PokerController");
   
-  Stopwatch _timeElapsed = new Stopwatch();
+  Stopwatch _stopWatch = new Stopwatch();
   int _secondsRemaining = 00;
   int _minutesRemaining = NUMBER_OF_MINUTES;
+  
   
   PokerController() {
     Logger.root.level = Level.ALL;
     startQuickLogging();
-    _timeElapsed.start();
     
-    
+    _stopWatch.start();
     new Timer.periodic(new Duration(seconds:1), _updateTimeRemaining);
     
   }
   
   void _updateTimeRemaining(Timer timer) {
 
-    if (_timeElapsed.elapsed.compareTo(new Duration(minutes: NUMBER_OF_MINUTES)) < 0) {
+    if (_stopWatch.elapsed.compareTo(new Duration(minutes: NUMBER_OF_MINUTES)) < 0) {
       
-      _minutesRemaining = NUMBER_OF_MINUTES - _timeElapsed.elapsed.inMinutes - 1;
-      _secondsRemaining = 60 - _timeElapsed.elapsed.inSeconds % 60;
+      _minutesRemaining = NUMBER_OF_MINUTES - _stopWatch.elapsed.inMinutes - 1;
+      _secondsRemaining = 60 - _stopWatch.elapsed.inSeconds % 60;
       
-      log.finest(_timeElapsed.elapsed.inSeconds.toString());
+      log.finest(_stopWatch.elapsed.inSeconds.toString());
     } else {
       
-      _timeElapsed.stop();
+      _stopWatch.stop();
       _minutesRemaining = 0;
       _secondsRemaining = 0;
       
     }
   }
   
-  String get secondsRemaining => _formatter.format(_secondsRemaining);
-  String get minutesRemaining => _formatter.format(_minutesRemaining);
+  void toggleTimer() {
+    _stopWatch.isRunning ? _stopWatch.stop() : _stopWatch.start();
+  }
+  
+  String get timeRemaining => "${_formatter.format(_minutesRemaining)}:${_formatter.format(_secondsRemaining)}";
+  String get controlText => _stopWatch.isRunning ? "Pause" : "Play";
   
 }
 

@@ -19,3 +19,10 @@ h1, p {
 [ng-cloak] {
   display: none;
 }
+
+#timeRemaining {
+  font-size: 10em;
+  line-height: 2em;
+}
+
+//TODO MAKE MY BUTTON Bigger

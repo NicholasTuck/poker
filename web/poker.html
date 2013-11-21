@@ -11,11 +11,13 @@
   
     <div ng-hide="true">Wait, Dart is loading this awesome app...</div>
     
-    <div poker-controller class="border well" ng-cloak>
-      <div>{{controller.minutesRemaining}}:{{controller.secondsRemaining}}</div>
+    <div poker-controller ng-cloak>
+      <div id="timeRemaining">{{controller.timeRemaining}}</div>
     
-    
+      <button ng-click="controller.toggleTimer()">{{controller.controlText}}</button>
     </div>
+    
+    
     <script type="application/dart" src="poker.dart"></script>
     <script src="packages/browser/dart.js"></script>
   </body>
