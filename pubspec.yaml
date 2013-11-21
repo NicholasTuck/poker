@@ -4,6 +4,9 @@ description: A sample web application
 dependencies:
   angular: any
   browser: any
+  intl: any
   js: any
+  logging: any
+  logging_handlers: any
   unittest: any
   web_ui: any
