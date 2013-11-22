@@ -12,8 +12,7 @@
     <div ng-hide="true">Wait, Dart is loading this awesome app...</div>
     
     <div poker-controller ng-cloak>
-      <div id="timeRemaining">{{controller.timeRemaining}}</div>
-    
+      <countdown start-time="2"> </countdown> 
       <button ng-click="controller.toggleTimer()">{{controller.controlText}}</button>
     </div>
     
