@@ -14,7 +14,7 @@ import 'dart:core';
       'start-time' : '=>startTime'
     })
 class CountdownController {
-  static const DEBUGGING = false;
+  static const DEBUGGING = false;  
   static final Logger log = new Logger("PokerController");
 
   static final DateFormat _formatter = new DateFormat.ms();
@@ -79,11 +79,12 @@ class CountdownController {
 
   void _updateColorClass() {
     int warningMinutes = (_startingDuration.inMinutes * WARNING_PERCENTAGE).round();
+    int warningDebugMinutes = (_startingDuration.inMinutes * .1).round();
     
-    if (_timeRemaining.inMinutes <= 1) {
+    if (_timeRemaining.inMinutes <= 0) {
       colorClass = DANGER_COLOR_CLASS;
-    } else if (_timeRemaining.inMinutes <= warningMinutes) {
-      colorClass = (DEBUGGING ? .1 : WARNING_COLOR_CLASS);
+    } else if (_timeRemaining.inMinutes <= warningMinutes || (DEBUGGING && _timeRemaining.inMinutes <= warningDebugMinutes)) {
+      colorClass = WARNING_COLOR_CLASS;
     }
   }
 
@@ -91,5 +92,7 @@ class CountdownController {
     toggleTimer();
     _timeRemaining = Duration.ZERO;
     _scope.$emit("countdownComplete");
+    // TODO make the countdown blink, or grab attention that it's done
+    // TODO maybe add sounds, or something to alert players of the change
   }
 }
