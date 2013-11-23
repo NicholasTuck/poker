@@ -49,6 +49,7 @@ class CountdownController {
   }
   
   void resetTimer() {
+    if(_stopWatch.isRunning) toggleTimer();
     _stopWatch.reset();
     initiliazeCountdown(_startTime);
     _scope.$emit("timerReset");
