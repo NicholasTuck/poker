@@ -17,11 +17,20 @@ class CountdownController {
   static final NumberFormat _formatter = new NumberFormat("00", "en_US");
   static final Logger log = new Logger("PokerController");
   
+  static const String NORMAL_COLOR_CLASS = "normal";
+  static const String WARNING_COLOR_CLASS = "warning";
+//  static const double WARNING_PERCENTAGE = .7;
+  static const double WARNING_PERCENTAGE = .1;    // used for debugging only
+  static const String DANGER_COLOR_CLASS = "danger";
+  
+  Scope _scope;
+  String colorClass;
+  
   Stopwatch _stopWatch = new Stopwatch();
   int _startTime;
-  int _secondsRemaining = 00;
+  int _secondsRemaining;
   int _minutesRemaining;
-  Scope _scope;
+  
   
   CountdownController(Scope this._scope) {
     _minutesRemaining = _startTime;
@@ -39,6 +48,7 @@ class CountdownController {
     _startTime = startTime;
     _minutesRemaining = _startTime;
     _secondsRemaining = 0;
+    colorClass = NORMAL_COLOR_CLASS;
   }
   
   String get timeRemaining => "${_formatter.format(_minutesRemaining)}:${_formatter.format(_secondsRemaining)}";
@@ -61,8 +71,14 @@ class CountdownController {
     if (_stopWatch.isRunning) { 
       if (_stopWatch.elapsed.compareTo(new Duration(minutes: _startTime)) < 0) {
         
-        _minutesRemaining = _startTime - _stopWatch.elapsed.inMinutes - 1;
+        _minutesRemaining = _startTime - _stopWatch.elapsed.inMinutes  - 1;
         _secondsRemaining = 60 - _stopWatch.elapsed.inSeconds % 60 - 1;
+        
+        if (_stopWatch.elapsed.compareTo(new Duration(minutes:_startTime - 1)) > 0) {
+          colorClass = DANGER_COLOR_CLASS;
+        } else if (_stopWatch.elapsed.compareTo(new Duration(minutes: (_startTime * WARNING_PERCENTAGE).round())) > 0) {
+          colorClass = WARNING_COLOR_CLASS;
+        } 
         
       } else {
         
