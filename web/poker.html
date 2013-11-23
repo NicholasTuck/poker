@@ -4,16 +4,20 @@
   <head>
     <meta charset="utf-8">
     <title>PokerTimer</title>
+    <link rel="stylesheet" href="bootstrap.css">
     <link rel="stylesheet" href="poker.css">
+
+    
     <script src="packages/browser/interop.js"></script>
   </head>
   <body ng-app>
   
     <div ng-hide="true">Wait, Dart is loading this awesome app...</div>
     
-    <div poker-controller ng-cloak>
-      <countdown start-time="2"> </countdown> 
-      <button ng-click="controller.toggleTimer()">{{controller.controlText}}</button>
+    <div id="pokerPod" poker-controller ng-cloak>
+      <h1>Poker Pod</h1>
+      <countdown start-time="1  "> </countdown> 
+      <button class="button" ng-click="controller.toggleTimer()">{{controller.controlText}}</button>
     </div>
     
     
