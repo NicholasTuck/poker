@@ -27,16 +27,31 @@ class PokerController {
   static final Logger log = new Logger("PokerController");
   Scope _scope;
   bool _isRunning = false;
+  bool _roundOver = false;
   
   PokerController(Scope this._scope) {
     _scope.$on("timerToggled", onTimerToggled);
+    _scope.$on("countdownComplete", onCountdownComplete);
   }
   
-  String get controlText => _isRunning ? "Pause" : "Play";
-  void toggleTimer() {_scope.$broadcast("toggleTimer");}
+  String get controlText {
+    if (_roundOver) return "Next Round";
+    return _isRunning ? "Pause" : "Play";  
+  }
+  
+  void toggleTimer() {
+    log.fine("Toggle Timer Clicked");
+    if (_roundOver && !_isRunning) {
+      resetRound();
+      _roundOver = false;
+    }
+    _scope.$broadcast("toggleTimer");
+    }
   void resetRound() {_scope.$broadcast("resetTimer");}
 
   void onTimerToggled(ScopeEvent scopeEvent, bool toggledOn) {_isRunning = toggledOn;}  
+  void onCountdownComplete() {_roundOver = true;}  
+
 }
 
 

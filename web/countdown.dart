@@ -14,13 +14,14 @@ import 'dart:core';
       'start-time' : '=>startTime'
     })
 class CountdownController {
+  static const DEBUGGING = false;
+  
   static final NumberFormat _formatter = new NumberFormat("00", "en_US");
   static final Logger log = new Logger("PokerController");
   
   static const String NORMAL_COLOR_CLASS = "normal";
   static const String WARNING_COLOR_CLASS = "warning";
-//  static const double WARNING_PERCENTAGE = .7;
-  static const double WARNING_PERCENTAGE = .1;    // used for debugging only
+  static const double WARNING_PERCENTAGE = .7;
   static const String DANGER_COLOR_CLASS = "danger";
   
   Scope _scope;
@@ -63,13 +64,13 @@ class CountdownController {
     _stopWatch.reset();
     initiliazeCountdown(_startTime);
     _scope.$emit("timerReset");
-
   }
   
   void _updateTimeRemaining([Timer timer = null]) {
 
     if (_stopWatch.isRunning) { 
-      if (_stopWatch.elapsed.compareTo(new Duration(minutes: _startTime)) < 0) {
+      if (_stopWatch.elapsed.compareTo(new Duration(minutes: _startTime)) < 0 
+          && !(DEBUGGING && _stopWatch.elapsed.compareTo(new Duration(seconds: 5)) > 0)) {    // make rounds only 5 seconds while debugging
         
         _minutesRemaining = _startTime - _stopWatch.elapsed.inMinutes  - 1;
         _secondsRemaining = 60 - _stopWatch.elapsed.inSeconds % 60 - 1;
@@ -77,17 +78,20 @@ class CountdownController {
         if (_stopWatch.elapsed.compareTo(new Duration(minutes:_startTime - 1)) > 0) {
           colorClass = DANGER_COLOR_CLASS;
         } else if (_stopWatch.elapsed.compareTo(new Duration(minutes: (_startTime * WARNING_PERCENTAGE).round())) > 0) {
-          colorClass = WARNING_COLOR_CLASS;
+          colorClass = (DEBUGGING ? .1 : WARNING_COLOR_CLASS);
         } 
         
       } else {
-        
-        _stopWatch.stop();
-        _minutesRemaining = 0;
-        _secondsRemaining = 0;
-        
+        countdownComplete();
       }
     }
+  }
+
+  void countdownComplete() {
+    toggleTimer();
+    _minutesRemaining = 0;
+    _secondsRemaining = 0;
+    _scope.$emit("countdownComplete");
   }
   
   
