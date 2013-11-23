@@ -34,8 +34,9 @@ class PokerController {
   
   String get controlText => _isRunning ? "Pause" : "Play";
   void toggleTimer() {_scope.$broadcast("toggleTimer");}
-  void onTimerToggled(ScopeEvent scopeEvent, bool toggledOn) {_isRunning = toggledOn;}
-  
+  void resetRound() {_scope.$broadcast("resetTimer");}
+
+  void onTimerToggled(ScopeEvent scopeEvent, bool toggledOn) {_isRunning = toggledOn;}  
 }
 
 

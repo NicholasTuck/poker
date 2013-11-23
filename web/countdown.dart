@@ -28,14 +28,34 @@ class CountdownController {
     new Timer.periodic(new Duration(seconds:1), _updateTimeRemaining);
     
     _scope.$on("toggleTimer", toggleTimer);
+    _scope.$on("resetTimer", resetTimer);
   }
   
   set startTime (int time) {
-    _startTime = time;
-    _minutesRemaining = _startTime;
+    initiliazeCountdown(time);
   }
   
-  void _updateTimeRemaining(Timer timer) {
+  void initiliazeCountdown(int startTime) {
+    _startTime = startTime;
+    _minutesRemaining = _startTime;
+    _secondsRemaining = 0;
+  }
+  
+  String get timeRemaining => "${_formatter.format(_minutesRemaining)}:${_formatter.format(_secondsRemaining)}";
+
+  void toggleTimer() {
+    _stopWatch.isRunning ? _stopWatch.stop() : _stopWatch.start();
+    _scope.$emit("timerToggled", new List<bool>()..add(_stopWatch.isRunning));
+  }
+  
+  void resetTimer() {
+    _stopWatch.reset();
+    initiliazeCountdown(_startTime);
+    _scope.$emit("timerReset");
+
+  }
+  
+  void _updateTimeRemaining([Timer timer = null]) {
 
     if (_stopWatch.isRunning) { 
       if (_stopWatch.elapsed.compareTo(new Duration(minutes: _startTime)) < 0) {
@@ -52,14 +72,6 @@ class CountdownController {
       }
     }
   }
-  
-  
-  void toggleTimer() {
-    _stopWatch.isRunning ? _stopWatch.stop() : _stopWatch.start();
-    _scope.$emit("timerToggled", new List<bool>()..add(_stopWatch.isRunning));
-  }
-  
-  String get timeRemaining => "${_formatter.format(_minutesRemaining)}:${_formatter.format(_secondsRemaining)}";
   
   
 }
