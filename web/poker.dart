@@ -28,7 +28,7 @@ class PokerController {
   bool _isRunning = false;
   bool _levelOver = false;
   
-  int currentLevel = 1;
+  int currentLevel = 0;
 
   PokerController(Scope this._scope) {
     _scope.$on("timerToggled", onTimerToggled);
