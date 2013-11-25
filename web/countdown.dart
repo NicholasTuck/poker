@@ -16,6 +16,10 @@ import 'dart:core';
     })
 class CountdownController {
   static const DEBUGGING = true;
+  static const DEBUGGING_WARNING_SECONDS = 5;
+  static const DEBUGGING_DANGER_SECONDS = 10;
+  static const DEBUGGING_EXPIRED_SECONDS = 15;
+  
   static final Logger log = new Logger("CountdownController");
 
   static final DateFormat _formatter = new DateFormat.ms();
@@ -30,7 +34,7 @@ class CountdownController {
   String colorClass;
 
   Stopwatch _stopWatch = new Stopwatch();
-  Duration _startingDuration;
+  Duration _levelDuration;
   Duration _timeRemaining;
 
   CountdownController(Scope this._scope) {
@@ -45,8 +49,8 @@ class CountdownController {
   }
 
   void initiliazeCountdown(int startTime) {
-    _startingDuration = new Duration(minutes:startTime);
-    _timeRemaining = new Duration(minutes:startTime);
+    _levelDuration = new Duration(minutes:startTime);
+    _timeRemaining = new Duration(seconds:_levelDuration.inSeconds);
     colorClass = NORMAL_COLOR_CLASS;
   }
 
@@ -60,39 +64,45 @@ class CountdownController {
   void resetTimer() {
     if(_stopWatch.isRunning) toggleTimer();
     _stopWatch.reset();
-    initiliazeCountdown(_startingDuration.inMinutes);
+    initiliazeCountdown(_levelDuration.inMinutes);
     _scope.$emit("timerReset");
   }
 
   void _updateTimeRemaining([Timer timer = null]) {
     if (_stopWatch.isRunning) {
       bool isTimeExpired = _timeRemaining.inSeconds <= 0;
-      bool isExpiredForDebugging = DEBUGGING && _stopWatch.elapsed.inSeconds >= 5;
+      bool isExpiredForDebugging = DEBUGGING && _stopWatch.elapsed.inSeconds >= DEBUGGING_EXPIRED_SECONDS;
 
       if (isTimeExpired || isExpiredForDebugging) {
         countdownComplete();
       } else {
-        _timeRemaining = _startingDuration - _stopWatch.elapsed;
+        _timeRemaining = _levelDuration - _stopWatch.elapsed;
         _updateColorClass();
       }
     }
   }
 
   void _updateColorClass() {
-    int warningMinutes = (_startingDuration.inMinutes * WARNING_PERCENTAGE).round();
-    int warningDebugMinutes = (_startingDuration.inMinutes * .1).round();
+    int warningMinutes = (_levelDuration.inMinutes * WARNING_PERCENTAGE).round();
+    int warningDebugMinutes = (_levelDuration.inMinutes * .1).round();
+    bool isDangerForDebugging = DEBUGGING && _stopWatch.elapsed.inSeconds >= DEBUGGING_DANGER_SECONDS;
+    bool isWarningForDebugging = DEBUGGING && _stopWatch.elapsed.inSeconds >= DEBUGGING_WARNING_SECONDS;
 
-    if (_timeRemaining.inMinutes <= 0) {
+    if (_timeRemaining.inMinutes <= 0 || isDangerForDebugging) {
       colorClass = DANGER_COLOR_CLASS;
-    } else if (_timeRemaining.inMinutes <= warningMinutes || (DEBUGGING && _timeRemaining.inMinutes <= warningDebugMinutes)) {
+    } else if (_timeRemaining.inMinutes <= warningMinutes || isWarningForDebugging) {
       colorClass = WARNING_COLOR_CLASS;
+    } else {
+      colorClass = NORMAL_COLOR_CLASS;
     }
   }
 
   void countdownComplete() {
-    toggleTimer();
-    _timeRemaining = Duration.ZERO;
+    _timeRemaining = new Duration(seconds:_levelDuration.inSeconds);
+    _stopWatch.reset();
+    _updateColorClass();
     _scope.$emit("countdownComplete");
+    
     // TODO make the countdown blink, or grab attention that it's done
     // TODO maybe add sounds, or something to alert players of the change
   }

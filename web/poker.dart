@@ -36,7 +36,6 @@ class PokerController {
   }
 
   String get controlText {
-    if (_levelOver) return "Next Level";
     return _isRunning ? "Pause" : "Play";
   }
 
