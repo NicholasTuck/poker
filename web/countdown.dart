@@ -15,7 +15,7 @@ import 'dart:core';
       'start-time' : '=>startTime'
     })
 class CountdownController {
-  static const DEBUGGING = false;
+  static const DEBUGGING = true;
   static final Logger log = new Logger("CountdownController");
 
   static final DateFormat _formatter = new DateFormat.ms();
@@ -67,7 +67,7 @@ class CountdownController {
   void _updateTimeRemaining([Timer timer = null]) {
     if (_stopWatch.isRunning) {
       bool isTimeExpired = _timeRemaining.inSeconds <= 0;
-      bool isExpiredForDebugging = DEBUGGING && _stopWatch.elapsed.inSeconds > 5; // make rounds only 5 seconds while debugging
+      bool isExpiredForDebugging = DEBUGGING && _stopWatch.elapsed.inSeconds >= 5;
 
       if (isTimeExpired || isExpiredForDebugging) {
         countdownComplete();

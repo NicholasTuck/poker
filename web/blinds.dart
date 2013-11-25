@@ -8,43 +8,35 @@ import 'dart:core';
     selector: 'blinds',
     templateUrl: 'blinds.html',
     cssUrl: 'blinds.css',
-    publishAs: 'controller')
+    publishAs: 'controller',
+    map: const {
+        'current-level' : '=>currentLevel'
+      })
 
 class BlindsController {
   static final Logger log = new Logger("BlindsController");
-
   Scope _scope;
 
   int _smallBlind = 25;
   int _bigBlind = 50;
+  
+  int currentLevel;
 
   BlindsController(Scope this._scope) {
-
-    _scope.$on("levelChanged", changeLevel);
+//    _scope.$on("startNextLevel", startNextLevel);
   }
 
-  set smallBlind(int smallBlind) {
-    _smallBlind = smallBlind;
-  }
+  String get currentBlinds => "${_smallBlind * currentLevel} - ${_bigBlind * currentLevel}";
+  String get nextLevelBlinds =>  "${_smallBlind * currentLevel * 2} - ${_bigBlind * currentLevel * 2}";
 
-  set bigBlind(int bigBlind) {
-    _bigBlind = bigBlind;
-  }
+//  void startNextLevel() {
 
-  String get currentBlinds => _smallBlind.toString() + " - " + _bigBlind.toString();
-  String get nextLevelBlinds => (_smallBlind * 2).toString() + " - " + (_bigBlind * 2).toString();
 
-  void changeLevel() {
-
-    _smallBlind *= 2;
-    _bigBlind *= 2;
-//
-//
 //    List<int> blinds = new List();
 //    blinds.add(_smallBlind);
 //    blinds.add(_bigBlind);
 //    _scope.$emit("blindsUpdated", blinds);
 
-    log.fine("New Blinds: " + currentBlinds);
-  }
+//    log.fine("New Blinds: " + currentBlinds);
+//  }
 }

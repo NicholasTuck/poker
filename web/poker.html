@@ -18,10 +18,10 @@
       <h1>Blind Boss</h1>
       <countdown start-time="1"></countdown> 
       
-      <blinds></blinds>   
+      <blinds current-level="controller.currentLevel"></blinds>   
          
       <button class="button" ng-click="controller.toggleTimer()">{{controller.controlText}}</button>
-      <button class="button" id="resetButton" ng-click="controller.resetRound()">Reset</button>
+      <button class="button" id="resetButton" ng-click="controller.resetLevel()">Reset</button>
     
     </div>
     
