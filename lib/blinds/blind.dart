@@ -9,6 +9,6 @@ class Blind {
 
   Blind.anteOnly(this.ante): smallBlind = 0, bigBlind = 0;
 
-  Blind(this.smallBlind, this.bigBlind): ante = 0;
+  Blind(this.smallBlind, this.bigBlind, this.ante);
   
 }
