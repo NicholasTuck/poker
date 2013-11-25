@@ -26,7 +26,6 @@ class PokerController {
   static final Logger log = new Logger("PokerController");
   Scope _scope;
   bool _isRunning = false;
-  bool _levelOver = false;
   
   int currentLevel = 0;
 
@@ -35,33 +34,24 @@ class PokerController {
     _scope.$on("countdownComplete", onCountdownComplete);
   }
 
-  String get controlText {
-    return _isRunning ? "Pause" : "Play";
-  }
+  String get controlText => _isRunning ? "Pause" : "Play";
 
   void toggleTimer() {
     log.fine("Toggle Timer Clicked");
-    if (_levelOver && !_isRunning) {
-      startNextLevel();
-    }
     _scope.$broadcast("toggleTimer");
   }
 
   void startNextLevel() {
-    resetLevel();
-    _levelOver = false;
     currentLevel++;
-//    _scope.$broadcast("startNextLevel");
+    _scope.$broadcast("restartCountdown");
   }
   
-  void resetLevel() {_scope.$broadcast("resetTimer");}
+  void resetLevel() {_scope.$broadcast("resetCountdown");}
 
   void onTimerToggled(ScopeEvent scopeEvent, bool toggledOn) {_isRunning = toggledOn;}
 
   void onCountdownComplete() {
-    _levelOver = true;
+    startNextLevel();
+    // TODO grab attention that level is complete
   }
-
 }
-
-
