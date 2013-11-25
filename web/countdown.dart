@@ -98,12 +98,7 @@ class CountdownController {
   }
 
   void countdownComplete() {
-    _timeRemaining = new Duration(seconds:_levelDuration.inSeconds);
-    _stopWatch.reset();
-    _updateColorClass();
+    _stopWatch.stop();
     _scope.$emit("countdownComplete");
-    
-    // TODO make the countdown blink, or grab attention that it's done
-    // TODO maybe add sounds, or something to alert players of the change
   }
 }
