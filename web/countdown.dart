@@ -65,14 +65,8 @@ class CountdownController {
     _scope.$emit("timerToggled", new List<bool>()..add(_stopWatch.isRunning));
     log.fine("Timer toggled - isRunning is now ${_stopWatch.isRunning}");
   }
-  
-  void stopTimer() {
-    if(_stopWatch.isRunning) toggleTimer();
-  }
-  
-  void startTimer() {
-    if(!_stopWatch.isRunning) toggleTimer();
-  }
+  void stopTimer() {_stopWatch.stop();}
+  void startTimer() {_stopWatch.start();}
 
   void resetCountdown() { 
     _stopWatch.reset();
@@ -120,6 +114,7 @@ class CountdownController {
 
   void _countdownComplete() {
     log.fine("Countdown complete");
+    _stopWatch.stop();
     _stopWatch.reset();
     _timeRemaining = Duration.ZERO;
     _scope.$emit("countdownComplete");
