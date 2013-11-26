@@ -13,7 +13,8 @@ part 'blind.dart';
     cssUrl: 'packages/pokertimer/blinds/blinds.css',
     publishAs: 'controller',
     map: const {
-        'current-level' : '=>currentLevel'
+        'current-level' : '=>currentLevel',
+        'blinds' : '=>blinds'
       })
 
 class BlindsController {

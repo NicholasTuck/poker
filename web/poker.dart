@@ -26,11 +26,13 @@ void main() {
 )
 class PokerController {
   static final Logger log = new Logger("PokerController");
+  static const bool DEBUGGING = true;
   Scope _scope;
   
   bool _isRunning = false;
   
   int currentLevel = 0;
+  bool isSuddenDeath = false;
   List<Blind> blinds = new List<Blind>()
       ..add(new Blind.blindsOnly(25, 50))
       ..add(new Blind.blindsOnly(50, 100))
@@ -43,6 +45,10 @@ class PokerController {
   PokerController(Scope this._scope) {
     _scope.$on("timerToggled", onTimerToggled);
     _scope.$on("countdownComplete", onLevelComplete);
+    
+    if(DEBUGGING) {
+      blinds.removeRange(3, blinds.length);
+    }
   }
 
   String get controlText => _isRunning ? "Pause" : "Play";
@@ -69,16 +75,15 @@ class PokerController {
     if (notCompleteWithAllLevels()) {
       startNextLevel();
     } else {
-      startSuddenDeth();
+      startSuddenDeath();
     }
   }
   
-  void startSuddenDeth() {
-    //TODO hide countdown
-    //TODO replace with text 'Sudden Death'
+  void startSuddenDeath() {
+    isSuddenDeath = true;
   }
-  
+    
   bool notCompleteWithAllLevels() {
-    return currentLevel < blinds.length;
+    return currentLevel + 1 < blinds.length;
   }
 }

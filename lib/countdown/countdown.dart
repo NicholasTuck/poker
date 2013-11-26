@@ -16,9 +16,9 @@ import 'dart:core';
     })
 class CountdownController {
   static const DEBUGGING = true;
-  static const DEBUGGING_WARNING_SECONDS = 5;
-  static const DEBUGGING_DANGER_SECONDS = 10;
-  static const DEBUGGING_EXPIRED_SECONDS = 3; // 15 TODO
+  static const DEBUGGING_WARNING_SECONDS = 1;
+  static const DEBUGGING_DANGER_SECONDS = 3;
+  static const DEBUGGING_EXPIRED_SECONDS = 5;
   
   static final Logger log = new Logger("CountdownController");
 

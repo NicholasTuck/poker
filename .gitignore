@@ -12,3 +12,4 @@
 packages
 .project
 pubspec.lock
+*.orig
