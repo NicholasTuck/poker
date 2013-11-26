@@ -10,7 +10,7 @@ part 'blind.dart';
 @NgComponent(
     selector: 'blinds',
     templateUrl: 'packages/pokertimer/blinds/blinds.html',
-    cssUrl: 'packages/pokertime/blinds/blinds.css',
+    cssUrl: 'packages/pokertimer/blinds/blinds.css',
     publishAs: 'controller',
     map: const {
         'current-level' : '=>currentLevel'
