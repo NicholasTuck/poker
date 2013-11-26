@@ -41,6 +41,15 @@ p {
   
 }
 
+#suddenDeath {
+  text-shadow:1px 2px 3px rgba(0,0,0,0.9);
+  font-weight:bold;
+  font-variant:small-caps;
+  color:#9E0909;
+  font-size:6em;
+  line-height:1;
+}
+
 .clearBoth {
   clear: both;
 }

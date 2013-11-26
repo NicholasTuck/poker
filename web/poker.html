@@ -17,7 +17,7 @@
     <div id="blindSupervision" poker-controller ng-cloak>
       
       <countdown ng-unless="controller.isSuddenDeath" start-time="20"></countdown> 
-      <h1 ng-if="controller.isSuddenDeath">Sudden Death</h1>
+      <h1 id="suddenDeath" ng-if="controller.isSuddenDeath">Sudden Death</h1>
       
       <blinds current-level="controller.currentLevel" blinds="controller.blinds"></blinds>   
          
