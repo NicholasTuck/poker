@@ -8,8 +8,8 @@ import 'dart:core';
 
 @NgComponent(
     selector: 'countdown',
-    templateUrl: 'countdown.html',
-    cssUrl: 'countdown.css',
+    templateUrl: 'packages/pokertimer/countdown/countdown.html',
+    cssUrl: 'packages/pokertimer/countdown/countdown.css',
     publishAs: 'controller',
     map: const {
       'start-time' : '=>startTime'
@@ -18,7 +18,7 @@ class CountdownController {
   static const DEBUGGING = true;
   static const DEBUGGING_WARNING_SECONDS = 5;
   static const DEBUGGING_DANGER_SECONDS = 10;
-  static const DEBUGGING_EXPIRED_SECONDS = 15;
+  static const DEBUGGING_EXPIRED_SECONDS = 3; // 15 TODO
   
   static final Logger log = new Logger("CountdownController");
 
@@ -114,8 +114,7 @@ class CountdownController {
 
   void _countdownComplete() {
     log.fine("Countdown complete");
-    _stopWatch.stop();
-    _stopWatch.reset();
+    stopTimer();
     _timeRemaining = Duration.ZERO;
     _scope.$emit("countdownComplete");
   }
