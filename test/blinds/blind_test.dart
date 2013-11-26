@@ -1,9 +1,7 @@
-library blinds;
-
 import "package:unittest/unittest.dart";
-import "package:pokertimer/blinds/blinds.dart";
+import "package:pokertimer/blinds/blind.dart";
 
-void main() {
+main() {
   test("Blinds Only Constructor should have ante of 0", () {
     Blind blind = new Blind.blindsOnly(5, 6);
     expect(blind.ante, equals(0));

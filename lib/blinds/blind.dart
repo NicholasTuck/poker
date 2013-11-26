@@ -1,4 +1,4 @@
-part of blinds;
+library blind;
 
 class Blind {
   int smallBlind;

@@ -4,6 +4,7 @@ import 'package:logging/logging.dart';
 import 'package:logging_handlers/logging_handlers_shared.dart';
 //import '../lib/blinds/blinds.dart';
 //import '../lib/countdown/countdown.dart';
+import 'package:pokertimer/blinds/blind.dart';
 import 'package:pokertimer/blinds/blinds.dart';
 import 'package:pokertimer/countdown/countdown.dart';
 
@@ -11,12 +12,15 @@ void main() {
   Logger.root.level = Level.ALL;
   startQuickLogging();
 
-  var module = new Module()
-  ..type(PokerController)
-  ..type(CountdownController)
-  ..type(BlindsController);
+  ngBootstrap(module:  new PokerModule());
+}
 
-  ngBootstrap(module:module);
+class PokerModule extends Module {
+  PokerModule() {
+    type(PokerController);
+    type(CountdownController);
+    type(BlindsController);
+  }
 }
 
 

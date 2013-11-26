@@ -3,8 +3,7 @@ library blinds;
 import 'package:angular/angular.dart';
 import 'package:logging/logging.dart';
 import 'dart:core';
-
-part 'blind.dart';
+import 'blind.dart';
 
 
 @NgComponent(
