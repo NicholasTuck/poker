@@ -17,8 +17,9 @@
     <div id="blindSupervision" poker-controller ng-cloak>
       
       <countdown ng-unless="controller.isSuddenDeath" 
-        start-time="20" 
-	      on-countdown-complete="controller.onLevelComplete()">
+        start-time="20"
+        is-running="controller.isRunning"
+	on-countdown-complete="controller.onLevelComplete()">
       </countdown> 
       
       <h1 id="suddenDeath" ng-if="controller.isSuddenDeath">Sudden Death</h1>

@@ -13,6 +13,7 @@ import 'dart:core';
     publishAs: 'controller',
     map: const {
       'start-time' : '=>startTime',
+      'is-running' : '<=>isRunning',
       'on-countdown-complete' : '&countdownCompleteCallback'
     })
 class CountdownController {
@@ -20,7 +21,7 @@ class CountdownController {
   static const DEBUGGING_WARNING_SECONDS = 1;
   static const DEBUGGING_DANGER_SECONDS = 3;
   static const DEBUGGING_EXPIRED_SECONDS = 5;
-  
+
   static final Logger log = new Logger("CountdownController");
 
   static final DateFormat _formatter = new DateFormat.ms();
@@ -36,16 +37,13 @@ class CountdownController {
   Stopwatch _stopWatch = new Stopwatch();
   Duration _startingDuration;
   Duration _timeRemaining;
-  
+
   String colorClass;
   Function countdownCompleteCallback;
 
   CountdownController(Scope this._scope) {
     new Timer.periodic(new Duration(seconds:1), _updateTimeRemaining);
 
-    _scope.$on("startTimer", startTimer);
-    _scope.$on("stopTimer", stopTimer);
-    _scope.$on("toggleTimer", toggleTimer);
     _scope.$on("resetCountdown", resetCountdown);
     _scope.$on("restartCountdown", restartCountdown);
   }
@@ -62,21 +60,22 @@ class CountdownController {
 
   String get timeRemainingText => _formatter.format(TIME_ZERO.add(_timeRemaining));
 
-  void toggleTimer() {
-    _stopWatch.isRunning ? _stopWatch.stop() : _stopWatch.start();
-    _scope.$emit("timerToggled", new List<bool>()..add(_stopWatch.isRunning));
-    log.fine("Timer toggled - isRunning is now ${_stopWatch.isRunning}");
-  }
   void stopTimer() {_stopWatch.stop();}
   void startTimer() {_stopWatch.start();}
 
-  void resetCountdown() { 
+  bool get isRunning => _stopWatch.isRunning;
+
+  set isRunning(bool running) {
+    running ? _stopWatch.start() : _stopWatch.stop();
+  }
+
+  void resetCountdown() {
     _stopWatch.reset();
     initiliazeCountdown(_startingDuration.inMinutes);
     _scope.$emit("countdownReset");
     log.fine("Countdown reset");
   }
-  
+
   void restartCountdown() {
     _stopWatch.reset();
     initiliazeCountdown(_startingDuration.inMinutes);
