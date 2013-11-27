@@ -1,0 +1,26 @@
+<div blinds-controller style="height:100%;" >
+
+  <div id="blinds" class="border"
+       ng-unless="controller.blind.smallBlind == 0 && controller.blind.bigBlind == 0">
+       
+    <div class="blindText">{{controller.blind.smallBlind}}</div>
+    <div>
+      <div>small blind</div>
+      <div>big blind</div>
+    </div>
+    <div class="blindText">{{controller.blind.bigBlind}}</div>
+    <div style="clear:both;"></div>
+
+  </div>
+  
+  <div id="ante" class="border"
+       ng-if="controller.blind.ante != 0">
+    
+    <span class="blindText">{{controller.blind.ante}}</span>
+    <br />ante
+    <div style="clear:both;"></div>
+    
+  </div>
+  
+  <div style="clear:both;"></div>
+</div>

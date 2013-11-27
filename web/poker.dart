@@ -5,7 +5,7 @@ import 'package:logging_handlers/logging_handlers_shared.dart';
 //import '../lib/blinds/blinds.dart';
 //import '../lib/countdown/countdown.dart';
 import 'package:pokertimer/blinds/blind.dart';
-import 'package:pokertimer/blinds/blinds.dart';
+import 'package:pokertimer/blinds/blindComponent.dart';
 import 'package:pokertimer/countdown/countdown.dart';
 
 void main() {
@@ -19,7 +19,7 @@ class PokerModule extends Module {
   PokerModule() {
     type(PokerController);
     type(CountdownController);
-    type(BlindsController);
+    type(BlindController);
   }
 }
 
@@ -36,11 +36,12 @@ class PokerController {
   bool isRunning = false;
 
   int currentLevel = 0;
+  int levelLength = 20;
   bool isSuddenDeath = false;
   List<Blind> blinds = new List<Blind>()
       ..add(new Blind.blindsOnly(25, 50))
-      ..add(new Blind.blindsOnly(50, 100))
-      ..add(new Blind.blindsOnly(75, 150))
+      ..add(new Blind.anteOnly(100))
+      ..add(new Blind(75, 150, 50))
       ..add(new Blind.blindsOnly(100, 200))
       ..add(new Blind.blindsOnly(200, 400))
       ..add(new Blind.blindsOnly(500, 1000))
@@ -53,7 +54,9 @@ class PokerController {
   }
 
   String get controlText => isRunning ? "Pause" : "Play";
-
+  Blind get currentBlind => blinds[currentLevel];
+  Blind get nextBlind => blinds[currentLevel + 1];
+  
   void toggleTimer() {
     isRunning = !isRunning;
   }

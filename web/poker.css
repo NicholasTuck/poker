@@ -1,6 +1,4 @@
-
 body {
-/*  background-color: #494747;  */
   background-image: url("images/backgroundPattern.png");
   background-repeat: repeat;
   font-family: 'Open Sans', sans-serif;
@@ -9,18 +7,19 @@ body {
   line-height: 1.2em;
   margin: 15px;
   color: white;
+  text-align: center;
 }
 
 #blindSupervision {
+  text-align: center;  
   max-width: 1000px;
+  min-width: 900px;
   margin: auto;
   padding-bottom: 5px;
-  text-align: center;
-  
-  /*Border only for initial creation to see edges and spacing clearly*/
   border-width: 1px;
   border-style: solid;
-/*  background-color: lightgray;*/
+  background-color: hsla(0, 0%, 13%, 0.75);
+  height: 100%;
 }
 
 h1 {
@@ -32,8 +31,51 @@ p {
   color: #333;
 }
 
+.levelWrapper {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 30px;
+  padding: 15px;
+  
+  /* Done using http://www.colorzilla.com/gradient-editor/ */
+  background: -moz-linear-gradient(top,  rgba(0,0,0,0.65) 0%, rgba(0,0,0,0) 50%, rgba(0,0,0,0.65) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.65)), color-stop(50%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.65))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 50%,rgba(0,0,0,0.65) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 50%,rgba(0,0,0,0.65) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 50%,rgba(0,0,0,0.65) 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 50%,rgba(0,0,0,0.65) 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6000000', endColorstr='#a6000000',GradientType=0 ); /* IE6-9 */
+  
+}
+
+.roundCorners {
+  -webkit-border-radius: 15px 15px 0px 0px; 
+  -moz-border-radius: 15px 15px 0px 0px;
+  -o-border-radius: 15px 15px 0px 0px;
+  border-radius: 15px 15px 0px 0px;
+}
+
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.countdownArea{
+  float: left;
+  margin-right: 5%;
+  margin-left: 5%;
+}
+
+.blind {
+  float: left;
+  height: 100%;
+}
+
 #title {
-  color: rgba(78, 0, 0, 0.65);
+  color: rgba(154, 6, 0, 1);
   float: left;
   font-weight: bolder;
   font-size: 1.7em;
