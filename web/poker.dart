@@ -32,9 +32,9 @@ class PokerController {
   static final Logger log = new Logger("PokerController");
   static const bool DEBUGGING = true;
   Scope _scope;
-  
-  bool _isRunning = false;
-  
+
+  bool isRunning = false;
+
   int currentLevel = 0;
   bool isSuddenDeath = false;
   List<Blind> blinds = new List<Blind>()
@@ -47,33 +47,31 @@ class PokerController {
       ..add(new Blind.blindsOnly(1000, 2000));
 
   PokerController(Scope this._scope) {
-    _scope.$on("timerToggled", onTimerToggled);
     _scope.$on("countdownComplete", onLevelComplete);
-    
+
     if(DEBUGGING) {
       blinds.removeRange(3, blinds.length);
     }
   }
 
-  String get controlText => _isRunning ? "Pause" : "Play";
+  String get controlText => isRunning ? "Pause" : "Play";
 
   void toggleTimer() {
-    log.fine("Toggle Timer Clicked");
-    _scope.$broadcast("toggleTimer");
+    isRunning = !isRunning;
   }
 
   void startNextLevel() {
     currentLevel++;
     _scope.$broadcast("restartCountdown");
   }
-  
+
   bool shouldStartNextlevel() {
     return currentLevel < blinds.length;
   }
-  
+
   void resetLevel() {_scope.$broadcast("resetCountdown");}
 
-  void onTimerToggled(ScopeEvent scopeEvent, bool toggledOn) {_isRunning = toggledOn;}
+  void onTimerToggled(ScopeEvent scopeEvent, bool toggledOn) {isRunning = toggledOn;}
 
   void onLevelComplete() {
     if (notCompleteWithAllLevels()) {
@@ -82,11 +80,11 @@ class PokerController {
       startSuddenDeath();
     }
   }
-  
+
   void startSuddenDeath() {
     isSuddenDeath = true;
   }
-    
+
   bool notCompleteWithAllLevels() {
     return currentLevel + 1 < blinds.length;
   }
