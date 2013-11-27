@@ -12,7 +12,8 @@ import 'dart:core';
     cssUrl: 'packages/pokertimer/countdown/countdown.css',
     publishAs: 'controller',
     map: const {
-      'start-time' : '=>startTime'
+      'start-time' : '=>startTime',
+      'on-countdown-complete' : '&countdownCompleteCallback'
     })
 class CountdownController {
   static const DEBUGGING = true;
@@ -37,6 +38,7 @@ class CountdownController {
   Duration _timeRemaining;
   
   String colorClass;
+  Function countdownCompleteCallback;
 
   CountdownController(Scope this._scope) {
     new Timer.periodic(new Duration(seconds:1), _updateTimeRemaining);
@@ -116,6 +118,6 @@ class CountdownController {
     log.fine("Countdown complete");
     stopTimer();
     _timeRemaining = Duration.ZERO;
-    _scope.$emit("countdownComplete");
+    countdownCompleteCallback();
   }
 }

@@ -48,7 +48,6 @@ class PokerController {
 
   PokerController(Scope this._scope) {
     _scope.$on("timerToggled", onTimerToggled);
-    _scope.$on("countdownComplete", onLevelComplete);
     
     if(DEBUGGING) {
       blinds.removeRange(3, blinds.length);
