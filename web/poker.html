@@ -17,6 +17,7 @@
       
       <!-- Current Level -->
       <div class="levelWrapper clearfix" style="height: 135px;">
+        <div class="levelNumber"><span class="levelNumberSpan">{{controller.currentLevel +1}}</span></div>
         <div class="countdownArea">
           <countdown class="countdown" ng-unless="controller.isSuddenDeath" 
             start-time="controller.levelLength"
@@ -34,6 +35,7 @@
       <!-- Next Level -->
       <div class="levelWrapper roundCorners clearfix" style="width: 80%; height: 110px;"
            ng-unless="controller.currentLevel + 1 >= controller.blinds.length">
+        <div class="levelNumber"><span class="levelNumberSpan">{{controller.currentLevel +2}}</span></div>   
         <div class="countdownArea">
           <h1>{{controller.levelLength}}:00</h1>
         </div>
