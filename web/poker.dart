@@ -7,6 +7,8 @@ import 'package:logging_handlers/logging_handlers_shared.dart';
 import 'package:pokertimer/blinds/blind.dart';
 import 'package:pokertimer/blinds/blindComponent.dart';
 import 'package:pokertimer/countdown/countdown.dart';
+import 'package:pokertimer/schedule/schedule.dart';
+import 'dart:html';
 
 void main() {
   Logger.root.level = Level.ALL;
@@ -47,7 +49,7 @@ class PokerController {
       ..add(new Blind.blindsOnly(500, 1000))
       ..add(new Blind.blindsOnly(1000, 2000));
 
-  PokerController(Scope this._scope) {    
+  PokerController(Scope this._scope) {
     if(DEBUGGING) {
       blinds.removeRange(3, blinds.length);
     }
@@ -56,7 +58,7 @@ class PokerController {
   String get controlText => isRunning ? "Pause" : "Play";
   Blind get currentBlind => blinds[currentLevel];
   Blind get nextBlind => blinds[currentLevel + 1];
-  
+
   void toggleTimer() {
     isRunning = !isRunning;
   }
@@ -88,5 +90,22 @@ class PokerController {
 
   bool notCompleteWithAllLevels() {
     return currentLevel + 1 < blinds.length;
+  }
+
+  void onFileLoad() {
+
+    var uploadInput = window.document.querySelector('#upload');
+    List files = uploadInput.files;
+    File file;
+    if (files.length == 1) {
+      file = files[0];
+      final reader = new FileReader();
+      reader.onLoadEnd.listen((value) => parseData(reader.result));
+      reader.readAsText(file);
+    }
+  }
+
+  void parseData(var result) {
+    blinds = new Schedule(result).levels;
   }
 }

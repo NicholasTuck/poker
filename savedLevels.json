@@ -1,0 +1,29 @@
+{
+    "levels": [
+        {
+            "small-blind": 25,
+            "big-blind": 50,
+            "ante": 0
+        },
+        {
+            "small-blind": 50,
+            "big-blind": 100,
+            "ante": 0
+        },
+        {
+            "small-blind": 100,
+            "big-blind": 200,
+            "ante": 0
+        },
+        {
+            "small-blind": 100,
+            "big-blind": 200,
+            "ante": 25
+        },
+        {
+            "small-blind": 150,
+            "big-blind": 300,
+            "ante": 50
+        }
+    ]
+}

@@ -47,9 +47,10 @@
         <button class="button" id="resetButton" ng-click="controller.resetLevel()">Reset</button>
       </div>
 
+      <input type="file" id="upload" ng-change="controller.onFileLoad()"/>
+      
       <div id="title">Blind Supervision</div>
     </div>
-    
     
     <script type="application/dart" src="poker.dart"></script>
     <script src="packages/browser/dart.js"></script>

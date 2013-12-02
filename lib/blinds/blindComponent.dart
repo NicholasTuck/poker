@@ -16,9 +16,9 @@ import 'blind.dart';
       })
 
 class BlindController {
-  static final Logger log = new Logger("BlindsController");
+  static final Logger log = new Logger("BlindController");
   Blind blind;
-  
+
   BlindController() { }
 
 }
