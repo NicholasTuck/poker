@@ -91,6 +91,13 @@ class PokerController {
   bool notCompleteWithAllLevels() {
     return currentLevel + 1 < blinds.length;
   }
+  
+  void resetApp() {
+    isRunning = false;
+    currentLevel = 0;
+    isSuddenDeath = false;
+    resetLevel();
+  }
 
   void onFileLoad() {
 
@@ -107,9 +114,6 @@ class PokerController {
 
   void parseData(var result) {
     blinds = new Schedule.fromJson(result).levels;
-    isRunning = false;
-    currentLevel = 0;
-    isSuddenDeath = false;
-    resetLevel();
+    resetApp();
   }
 }
