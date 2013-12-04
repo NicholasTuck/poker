@@ -2,8 +2,6 @@ import 'package:di/di.dart';
 import 'package:angular/angular.dart';
 import 'package:logging/logging.dart';
 import 'package:logging_handlers/logging_handlers_shared.dart';
-//import '../lib/blinds/blinds.dart';
-//import '../lib/countdown/countdown.dart';
 import 'package:pokertimer/blinds/blind.dart';
 import 'package:pokertimer/blinds/blindComponent.dart';
 import 'package:pokertimer/countdown/countdown.dart';
@@ -37,7 +35,7 @@ class PokerController {
 
   bool isRunning = false;
 
-  int currentLevel = 0;
+  int currentLevel;
   int levelLength = 20;
   bool isSuddenDeath = false;
   List<Blind> blinds = new List<Blind>()
@@ -50,6 +48,8 @@ class PokerController {
       ..add(new Blind.blindsOnly(1000, 2000));
 
   PokerController(Scope this._scope) {
+    currentLevel = 0;
+    
     if(DEBUGGING) {
       blinds.removeRange(3, blinds.length);
     }
@@ -94,18 +94,22 @@ class PokerController {
 
   void onFileLoad() {
 
-    var uploadInput = window.document.querySelector('#upload');
+    var uploadInput = window.document.querySelector('#upload'); //todo refactor to see if we can do this angular like
     List files = uploadInput.files;
-    File file;
     if (files.length == 1) {
-      file = files[0];
+      File file = files[0];
       final reader = new FileReader();
       reader.onLoadEnd.listen((value) => parseData(reader.result));
       reader.readAsText(file);
     }
+    uploadInput.value = null;
   }
 
   void parseData(var result) {
-    blinds = new Schedule(result).levels;
+    blinds = new Schedule.fromJson(result).levels;
+    isRunning = false;
+    currentLevel = 0;
+    isSuddenDeath = false;
+    resetLevel();
   }
 }
