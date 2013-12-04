@@ -98,6 +98,13 @@ class PokerController {
     isSuddenDeath = false;
     resetLevel();
   }
+  
+  
+  
+  void toggleAdminArea() {
+    var adminArea = window.document.querySelector('#adminArea');
+    adminArea.hidden = !adminArea.hidden;
+  }
 
   void onFileLoad() {
 

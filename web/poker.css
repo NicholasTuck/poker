@@ -31,6 +31,13 @@ p {
   color: #333;
 }
 
+a, a:visited, a:active {
+  color: #F1D129;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
 
 .roundCorners {
   -webkit-border-radius: 15px 15px 0px 0px; 

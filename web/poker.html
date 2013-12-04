@@ -44,17 +44,31 @@
       </div>  
       
       
-            <div id="controllButtons" ng-unless="controller.isSuddenDeath">
+      <div id="controllButtons" ng-unless="controller.isSuddenDeath">
         <button class="button" ng-click="controller.toggleTimer()">{{controller.controlText}}</button>
         <button class="button" id="resetButton" ng-click="controller.resetLevel()">Reset</button>
       </div>
 
-    <!-- need to try to hide this and add our own button: 
-    http://www.shauninman.com/archive/2007/09/10/styling_file_inputs_with_css_and_the_dom 
-    http://stackoverflow.com/questions/3956286/how-to-remove-text-field-from-html-file-input
-    -->
-      <input type="file" id="upload" ng-change="controller.onFileLoad()"/>
+
+      <!-- Maybe admin area can be it's own component ?? -->
+      <div style="margin-left:5px;">
+        <div style="text-align:left;">
+          <a ng-click="controller.toggleAdminArea()" href="#">Administration</a>
+        </div>
+        <div id="adminArea" hidden style="text-align: left;">
+          
+          <!-- need to try to hide this and add our own button: 
+          http://www.shauninman.com/archive/2007/09/10/styling_file_inputs_with_css_and_the_dom 
+          http://stackoverflow.com/questions/3956286/how-to-remove-text-field-from-html-file-input
+          -->
+          <div>
+            Import Schedule: <input type="file" id="upload" ng-change="controller.onFileLoad()"/>
+          </div>
+        </div>
+      </div>
       
+      
+      <br /><br />
       <div id="title">Blind Supervision</div>
     </div>
     
