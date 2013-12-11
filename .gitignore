@@ -13,3 +13,6 @@ packages
 .project
 pubspec.lock
 *.orig
+
+### Unsure about the following ###
+build/*
