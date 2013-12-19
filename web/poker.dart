@@ -4,6 +4,8 @@ import 'package:logging/logging.dart';
 import 'package:logging_handlers/logging_handlers_shared.dart';
 import 'package:pokertimer/blinds/blind.dart';
 import 'package:pokertimer/blinds/blindComponent.dart';
+import 'package:pokertimer/chip/chip.dart';
+import 'package:pokertimer/chip/chipComponent.dart';
 import 'package:pokertimer/countdown/countdown.dart';
 import 'package:pokertimer/schedule/schedule.dart';
 import 'dart:html';
@@ -20,6 +22,7 @@ class PokerModule extends Module {
     type(PokerController);
     type(CountdownController);
     type(BlindController);
+    type(ChipController);
   }
 }
 
@@ -46,6 +49,10 @@ class PokerController {
       ..add(new Blind.blindsOnly(200, 400))
       ..add(new Blind.blindsOnly(500, 1000))
       ..add(new Blind.blindsOnly(1000, 2000));
+  List<Chip> chips = new List<Chip>()
+      ..add(new Chip(value: 5, color: "Red"))
+      ..add(new Chip(value: 25, color: "Green"))
+      ..add(new Chip(value: 100, color: "Black"));
 
   PokerController(Scope this._scope) {
     currentLevel = 0;

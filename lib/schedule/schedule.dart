@@ -5,6 +5,8 @@ import 'package:pokertimer/blinds/blind.dart';
 
 class Schedule{
   List levels;
+  
+  Schedule(this.levels);
 
   Schedule.fromJson(String jsonScheduleString){
 

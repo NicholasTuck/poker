@@ -19,5 +19,4 @@ main() {
     expect(blind.bigBlind, equals(6));
     expect(blind.ante, equals(1));
   });
-  
 }
