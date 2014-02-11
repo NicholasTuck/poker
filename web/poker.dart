@@ -35,20 +35,23 @@ class PokerController {
 
   bool isRunning = false;
 
-  int currentLevel;
   int levelLength = 20;
   bool isSuddenDeath = false;
-  List<Blind> blinds = new List<Blind>()
-      ..add(new Blind.blindsOnly(25, 50))
-      ..add(new Blind.anteOnly(100))
-      ..add(new Blind(75, 150, 50))
-      ..add(new Blind.blindsOnly(100, 200))
-      ..add(new Blind.blindsOnly(200, 400))
-      ..add(new Blind.blindsOnly(500, 1000))
-      ..add(new Blind.blindsOnly(1000, 2000));
+
+  Schedule schedule;
 
   PokerController(Scope this._scope) {
-    currentLevel = 0;
+    List<Blind> blinds = new List<Blind>()
+        ..add(new Blind.blindsOnly(25, 50))
+        ..add(new Blind.anteOnly(100))
+        ..add(new Blind(75, 150, 50))
+        ..add(new Blind.blindsOnly(100, 200))
+        ..add(new Blind.blindsOnly(200, 400))
+        ..add(new Blind.blindsOnly(500, 1000))
+        ..add(new Blind.blindsOnly(1000, 2000));
+    
+    schedule = new Schedule(blinds);
+    schedule.currentBlindNumber = 0;
     
     if(DEBUGGING) {
       blinds.removeRange(3, blinds.length);
@@ -56,21 +59,21 @@ class PokerController {
   }
 
   String get controlText => isRunning ? "Pause" : "Play";
-  Blind get currentBlind => blinds[currentLevel];
-  Blind get nextBlind => blinds[currentLevel + 1];
+  Blind get currentBlind => schedule.currentBlind;
+  Blind get nextBlind => schedule.nextBlind;
+  int get currentLevel => schedule.currentBlindNumber;
 
   void toggleTimer() {
     isRunning = !isRunning;
   }
 
   void startNextLevel() {
-    currentLevel++;
+    schedule.currentBlindNumber++;
     _scope.$broadcast("restartCountdown");
   }
 
-  bool shouldStartNextlevel() {
-    return currentLevel < blinds.length;
-  }
+  bool get isLastLevel => schedule.currentBlindNumber == (schedule.blinds.length - 1);
+  
 
   void resetLevel() {_scope.$broadcast("resetCountdown");}
 
@@ -89,12 +92,12 @@ class PokerController {
   }
 
   bool notCompleteWithAllLevels() {
-    return currentLevel + 1 < blinds.length;
+    return schedule.currentBlindNumber + 1 < schedule.blinds.length;
   }
   
   void resetApp() {
     isRunning = false;
-    currentLevel = 0;
+    schedule.reset();
     isSuddenDeath = false;
     resetLevel();
   }
@@ -120,7 +123,7 @@ class PokerController {
   }
 
   void parseData(var result) {
-    blinds = new Schedule.fromJson(result).levels;
+    schedule = new Schedule.fromJson(result);
     resetApp();
   }
 }

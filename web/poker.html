@@ -34,7 +34,7 @@
       
       <!-- Next Level -->
       <div class="levelWrapper roundCorners clearfix" style="width: 80%; height: 110px;"
-           ng-unless="controller.currentLevel + 1 >= controller.blinds.length">
+           ng-unless="controller.isLastLevel">
         <div class="levelNumber"><span class="levelNumberSpan">{{controller.currentLevel +2}}</span></div>   
         <div class="countdownArea">
           <h1>{{controller.levelLength}}:00</h1>
