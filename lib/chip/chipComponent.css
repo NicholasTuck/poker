@@ -1,0 +1,27 @@
+#chip {
+  height: 100%;
+}
+
+#chips {
+  margin: 0 auto;
+  min-width: 150px;
+  height: 100%;
+}
+
+.border {
+  border-color: white;
+  border-style: solid;
+  border-width: 1px;
+  border-top: none;
+  border-bottom: none;
+}
+
+table {
+  margin: 0 auto;
+}
+
+td {
+  font-size: 3em;
+  line-height: 1.2em;
+  font-weight: bold;
+}

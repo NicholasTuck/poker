@@ -5,6 +5,7 @@ import 'package:pokertimer/blinds/blind.dart';
 import 'break.dart';
 
 class Schedule{
+
   List<Blind> blinds;
   int currentBlindNumber = 0;
   
@@ -12,11 +13,9 @@ class Schedule{
   int currentBreakNumber = 0;
   
   Schedule(this.blinds);
-
+  
   Schedule.fromJson(String jsonScheduleString){
-
     Map map = JSON.decode(jsonScheduleString);
-
     List theLevels = map['levels'];
 
     blinds = new List<Blind>();

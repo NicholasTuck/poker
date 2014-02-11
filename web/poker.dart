@@ -4,6 +4,8 @@ import 'package:logging/logging.dart';
 import 'package:logging_handlers/logging_handlers_shared.dart';
 import 'package:pokertimer/blinds/blind.dart';
 import 'package:pokertimer/blinds/blindComponent.dart';
+import 'package:pokertimer/chip/chip.dart';
+import 'package:pokertimer/chip/chipComponent.dart';
 import 'package:pokertimer/countdown/countdown.dart';
 import 'package:pokertimer/schedule/schedule.dart';
 import 'dart:html';
@@ -20,6 +22,7 @@ class PokerModule extends Module {
     type(PokerController);
     type(CountdownController);
     type(BlindController);
+    type(ChipController);
   }
 }
 
@@ -37,9 +40,14 @@ class PokerController {
 
   int levelLength = 20;
   bool isSuddenDeath = false;
-
   Schedule schedule;
+  
+  List<Chip> chips = new List<Chip>()
+      ..add(new Chip(value: 5, color: "Red"))
+      ..add(new Chip(value: 25, color: "Green"))
+      ..add(new Chip(value: 100, color: "Black"));
 
+  
   PokerController(Scope this._scope) {
     List<Blind> blinds = new List<Blind>()
         ..add(new Blind.blindsOnly(25, 50))
