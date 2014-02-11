@@ -1,4 +1,4 @@
-poker
+Blind Supervision
 =====
 
 Web Poker Timer created in Dart
