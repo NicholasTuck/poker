@@ -1,4 +1,4 @@
-library schedule;
+library breaks;
 
 class Break{
   int afterLevelNumber;

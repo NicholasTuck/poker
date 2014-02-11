@@ -59,7 +59,6 @@ class PokerController {
         ..add(new Blind.blindsOnly(1000, 2000));
     
     schedule = new Schedule(blinds);
-    schedule.currentBlindNumber = 0;
     
     if(DEBUGGING) {
       blinds.removeRange(3, blinds.length);
