@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
 import 'dart:core';
 
-@NgComponent(
+@Component(
     selector: 'countdown',
     templateUrl: 'packages/pokertimer/countdown/countdown.html',
     cssUrl: 'packages/pokertimer/countdown/countdown.css',
@@ -44,15 +44,15 @@ class CountdownController {
   CountdownController(Scope this._scope) {
     new Timer.periodic(new Duration(seconds:1), _updateTimeRemaining);
 
-    _scope.$on("resetCountdown", resetCountdown);
-    _scope.$on("restartCountdown", restartCountdown);
+    _scope.on("resetCountdown");
+    _scope.on("restartCountdown");
   }
 
   set startTime (int time) {
-    initiliazeCountdown(time);
+    initializeCountdown(time);
   }
 
-  void initiliazeCountdown(int startTime) {
+  void initializeCountdown(int startTime) {
     _startingDuration = new Duration(minutes:startTime);
     _timeRemaining = new Duration(seconds:_startingDuration.inSeconds);
     colorClass = NORMAL_COLOR_CLASS;
@@ -71,16 +71,16 @@ class CountdownController {
 
   void resetCountdown() {
     _stopWatch.reset();
-    initiliazeCountdown(_startingDuration.inMinutes);
-    _scope.$emit("countdownReset");
+    initializeCountdown(_startingDuration.inMinutes);
+    _scope.emit("countdownReset");
     log.fine("Countdown reset");
   }
 
   void restartCountdown() {
     _stopWatch.reset();
-    initiliazeCountdown(_startingDuration.inMinutes);
+    initializeCountdown(_startingDuration.inMinutes);
     startTimer();
-    _scope.$emit("countdownRestarted");
+    _scope.emit("countdownRestarted");
     log.fine("Countdown restarted");
   }
 

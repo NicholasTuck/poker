@@ -7,8 +7,6 @@
     <link rel="stylesheet" href="bootstrap.css">
     <link rel="stylesheet" href="poker.css">
 
-    
-    <script src="packages/browser/interop.js"></script>
   </head>
   <body ng-app>
     <div ng-hide="true">Please hold while we connect you with one of our operators...</div>
@@ -34,7 +32,7 @@
       
       <!-- Next Level -->
       <div class="levelWrapper roundCorners clearfix" style="width: 80%; height: 110px;"
-           ng-unless="controller.isLastLevel">
+           ng-if="!controller.isLastLevel">
         <div class="levelNumber"><span class="levelNumberSpan">{{controller.currentLevel +2}}</span></div>   
         <div class="countdownArea">
           <h1>{{controller.levelLength}}:00</h1>

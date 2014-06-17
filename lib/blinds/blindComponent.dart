@@ -6,7 +6,7 @@ import 'dart:core';
 import 'blind.dart';
 
 
-@NgComponent(
+@Component(
     selector: 'blind',
     templateUrl: 'packages/pokertimer/blinds/blindComponent.html',
     cssUrl: 'packages/pokertimer/blinds/blindComponent.css',

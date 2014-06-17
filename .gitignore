@@ -16,3 +16,7 @@ pubspec.lock
 
 ### Unsure about the following ###
 build/*
+
+###intelliJ###
+*.iml
+.idea/*

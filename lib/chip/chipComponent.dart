@@ -5,7 +5,7 @@ import 'package:logging/logging.dart';
 import 'dart:core';
 import 'chip.dart';
 
-@NgComponent(
+@Component(
     selector: 'chip',
     templateUrl: 'packages/pokertimer/chip/chipComponent.html',
     cssUrl: 'packages/pokertimer/chip/chipComponent.css',

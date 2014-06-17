@@ -25,7 +25,8 @@ class Schedule{
   }
 
   Blind get currentBlind => blinds[currentBlindNumber];
-  Blind get nextBlind => blinds[currentBlindNumber + 1];
+  //TODO need to return something better.
+  Blind get nextBlind => currentBlindNumber + 1 < blinds.length ? blinds[currentBlindNumber + 1] : 9999;
   
   void reset() {
     currentBlindNumber = 0;
