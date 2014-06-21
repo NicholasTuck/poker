@@ -44,8 +44,8 @@ class CountdownController {
   CountdownController(Scope this._scope) {
     new Timer.periodic(new Duration(seconds:1), _updateTimeRemaining);
 
-    _scope.on("resetCountdown");
-    _scope.on("restartCountdown");
+    _scope.on("resetCountdown").listen((_) => resetCountdown);
+    _scope.on("restartCountdown").listen((_) => restartCountdown());
   }
 
   set startTime (int time) {
@@ -72,6 +72,7 @@ class CountdownController {
   void resetCountdown() {
     _stopWatch.reset();
     initializeCountdown(_startingDuration.inMinutes);
+    stopTimer();
     _scope.emit("countdownReset");
     log.fine("Countdown reset");
   }
