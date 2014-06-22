@@ -2,17 +2,18 @@ import 'package:angular/angular.dart';
 import 'package:pokertimer/chip/chip.dart';
 import 'package:pokertimer/blinds/blind.dart';
 import 'package:pokertimer/schedule/schedule.dart';
+import 'package:pokertimer/schedule/saved/ScheduleService.dart';
 import 'package:logging/logging.dart';
 import 'package:logging_handlers/logging_handlers_shared.dart';
 
 import 'dart:html';
-
 
 @Controller(
     selector: '[poker-controller]',
     publishAs: 'controller'
 )
 class PokerController {
+  ScheduleService _scheduleService;
   static final Logger log = new Logger("PokerController");
   static const bool DEBUGGING = true;
   Scope _scope;
@@ -22,14 +23,16 @@ class PokerController {
   int levelLength = 20;
   bool isSuddenDeath = false;
   Schedule schedule;
+  String selectedServerSchedule;
+  String nameToSaveScheduleAs;
+  List<String> savedScheduleNames = [];
 
   List<Chip> chips = new List<Chip>()
     ..add(new Chip(value: 5, color: "Red"))
     ..add(new Chip(value: 25, color: "Green"))
     ..add(new Chip(value: 100, color: "Black"));
 
-
-  PokerController(Scope this._scope) {
+  PokerController(Scope this._scope, this._scheduleService) {
     List<Blind> blinds = new List<Blind>()
       ..add(new Blind.blindsOnly(25, 50))
       ..add(new Blind.anteOnly(100))
@@ -41,9 +44,13 @@ class PokerController {
 
     schedule = new Schedule(blinds);
 
-    if(DEBUGGING) {
+    if (DEBUGGING) {
       blinds.removeRange(3, blinds.length);
     }
+
+    savedScheduleNames = _scheduleService.savedScheduleNames();
+    selectedServerSchedule = noAvailableSchedules() ? "" : savedScheduleNames.first;
+
   }
 
   String get controlText => isRunning ? "Pause" : "Play";
@@ -61,7 +68,6 @@ class PokerController {
   }
 
   bool get isLastLevel => schedule.currentBlindNumber == (schedule.blinds.length - 1);
-
 
   void resetLevel() {_scope.broadcast("resetCountdown");}
 
@@ -91,8 +97,6 @@ class PokerController {
     resetLevel();
   }
 
-
-
   void toggleAdminArea() {
     var adminArea = window.document.querySelector('#adminArea');
     adminArea.hidden = !adminArea.hidden;
@@ -114,5 +118,17 @@ class PokerController {
   void parseData(var result) {
     schedule = new Schedule.fromJson(result);
     resetApp();
+  }
+
+  bool noAvailableSchedules() {
+    return savedScheduleNames == null || savedScheduleNames.isEmpty;
+  }
+
+  bool disableSaveToServerButton() {
+    return nameToSaveScheduleAs == null || nameToSaveScheduleAs == "" || schedule == null;
+  }
+
+  void saveScheduleToServer() {
+    _scheduleService.saveSchedule(nameToSaveScheduleAs, schedule);
   }
 }
