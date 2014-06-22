@@ -11,5 +11,8 @@ dependencies:
   logging: any
   logging_handlers: any
   unittest: any
+dev_dependencies:
+  dart_to_js_script_rewriter: ">=0.0.1+2 <0.1.0"
 transformers:
+- dart_to_js_script_rewriter
 - angular
