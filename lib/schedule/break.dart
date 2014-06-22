@@ -6,4 +6,7 @@ class Break{
   
   Break(this.afterLevelNumber, this.length);
 
+  Map toMap(){
+      return {'afterLevelNumber':afterLevelNumber, 'length':length};
+  }
 }

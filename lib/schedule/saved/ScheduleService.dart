@@ -1,8 +1,10 @@
 library scheduleService;
 
 import 'dart:async';
-import 'dart:html';
-import 'package:firebase/firebase.dart';
+import 'dart:html' hide Event;
+import 'dart:convert';
+import 'package:firebase/firebase.dart' ;
+import 'package:pokertimer/schedule/schedule.dart';
 
 class ScheduleService {
 
@@ -24,20 +26,25 @@ class ScheduleService {
     return savedSchedules;
   }
 
-  void findSavedScheduleNames(Firebase f){
+  void findSavedScheduleNames(Firebase firebase){
 
-    f.onValue.listen((Event e) {
-      for(var savedSchedule in e.snapshot.val()){
-        savedSchedules.add(savedSchedule['name']);
-      }
+    firebase.onValue.forEach((Event event) {
+
+      savedSchedules.clear();
+
+      event.snapshot.val().forEach((key, value) {
+        savedSchedules.add(key);
+      });
     });
   }
 
-  void testChild(Firebase f) {
+  void saveSchedule(String scheduleName, Schedule schedule){
+    Firebase savedSchedulesReference = new Firebase("$_firebaseUrl/savedSchedules");
+    authenticateFirebase(savedSchedulesReference);
 
-    var setChild = f.child('savedSchedules').set([{'name':'Halloween'},{'name':'Birthday'}]);
-    setChild.then((result) {
-      print('set savedSchedules');
-    });
+    Map scheduleMap = schedule.toMap();
+    String jsonString = JSON.encode(scheduleMap);
+
+    savedSchedulesReference.update({scheduleName: schedule.toMap()});
   }
 }

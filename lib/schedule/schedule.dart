@@ -24,6 +24,16 @@ class Schedule{
     }
   }
 
+  Map toMap(){
+
+    List<Map> blindMapList = [];
+    for(Blind blind in blinds){
+      blindMapList.add(blind.toMap());
+    }
+
+    return {'blinds':blindMapList};
+  }
+
   Blind get currentBlind => blinds[currentBlindNumber];
   //TODO need to return something better.
   Blind get nextBlind => currentBlindNumber + 1 < blinds.length ? blinds[currentBlindNumber + 1] : 9999;

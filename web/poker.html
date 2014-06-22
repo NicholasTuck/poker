@@ -72,6 +72,11 @@
                 <option ng-repeat="scheduleName in controller.savedScheduleNames" ng-value="scheduleName">{{scheduleName}}</option>
             </select>
             </div>
+            <div>
+                <label for="saveScheduleAsName">Save Current Schedule as</label>
+                <input type="text" ng-model="controller.nameToSaveScheduleAs" id="saveScheduleAsName">
+                <button id="saveScheduleButton" ng-disabled="controller.disableSaveToServerButton()" ng-click="controller.saveScheduleToServer()">Save</button>
+            </div>
         </div>
       </div>
 

@@ -8,7 +8,6 @@ import 'package:logging_handlers/logging_handlers_shared.dart';
 
 import 'dart:html';
 
-
 @Controller(
     selector: '[poker-controller]',
     publishAs: 'controller'
@@ -25,13 +24,13 @@ class PokerController {
   bool isSuddenDeath = false;
   Schedule schedule;
   String selectedServerSchedule;
+  String nameToSaveScheduleAs;
   List<String> savedScheduleNames = [];
 
   List<Chip> chips = new List<Chip>()
     ..add(new Chip(value: 5, color: "Red"))
     ..add(new Chip(value: 25, color: "Green"))
     ..add(new Chip(value: 100, color: "Black"));
-
 
   PokerController(Scope this._scope, this._scheduleService) {
     List<Blind> blinds = new List<Blind>()
@@ -45,7 +44,7 @@ class PokerController {
 
     schedule = new Schedule(blinds);
 
-    if(DEBUGGING) {
+    if (DEBUGGING) {
       blinds.removeRange(3, blinds.length);
     }
 
@@ -69,7 +68,6 @@ class PokerController {
   }
 
   bool get isLastLevel => schedule.currentBlindNumber == (schedule.blinds.length - 1);
-
 
   void resetLevel() {_scope.broadcast("resetCountdown");}
 
@@ -98,8 +96,6 @@ class PokerController {
     resetLevel();
   }
 
-
-
   void toggleAdminArea() {
     var adminArea = window.document.querySelector('#adminArea');
     adminArea.hidden = !adminArea.hidden;
@@ -125,5 +121,13 @@ class PokerController {
 
   bool noAvailableSchedules() {
     return savedScheduleNames == null || savedScheduleNames.isEmpty;
+  }
+
+  bool disableSaveToServerButton() {
+    return nameToSaveScheduleAs == null || nameToSaveScheduleAs == "" || schedule == null;
+  }
+
+  void saveScheduleToServer() {
+    _scheduleService.saveSchedule(nameToSaveScheduleAs, schedule);
   }
 }
