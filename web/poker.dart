@@ -6,7 +6,7 @@ import 'package:logging_handlers/logging_handlers_shared.dart';
 import 'package:pokertimer/blinds/blindComponent.dart';
 import 'package:pokertimer/chip/chipComponent.dart';
 import 'package:pokertimer/countdown/countdown.dart';
-import 'package:pokertimer/schedule/saved/scheduleService.dart';
+import 'package:pokertimer/schedule/saved/ScheduleService.dart';
 import 'dart:html';
 
 import 'PokerController.dart';
