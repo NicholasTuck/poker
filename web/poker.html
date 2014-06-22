@@ -68,16 +68,26 @@
             <div>
                 From File: <input type="file" id="upload" ng-change="controller.onFileLoad()"/>
             </div>
-            <div ng-if="!controller.noAvailableSchedules()">
-            <label for="scheduleNameDropDown">From Server</label>
-            <select ng-model="controller.savedScheduleNames[0]" id="scheduleNameDropDown" >
-                <option ng-repeat="scheduleName in controller.savedScheduleNames" ng-value="scheduleName">{{scheduleName}}</option>
-            </select>
+            <div class="row" ng-if="!controller.noAvailableSchedules()">
+                <div class="col-sm-3">
+                    <label for="scheduleNameDropDown">From Server</label>
+                </div>
+                <div  class="col-sm-2">
+                    <select class="form-control" ng-model="controller.savedScheduleNames[0]" id="scheduleNameDropDown" >
+                        <option ng-repeat="scheduleName in controller.savedScheduleNames" ng-value="scheduleName">{{scheduleName}}</option>
+                    </select>
+                </div>
             </div>
-            <div>
+            <div class="row">
+                <div class="col-sm-3">
                 <label for="saveScheduleAsName">Save Current Schedule as</label>
-                <input type="text" ng-model="controller.nameToSaveScheduleAs" id="saveScheduleAsName">
-                <button id="saveScheduleButton" ng-disabled="controller.disableSaveToServerButton()" ng-click="controller.saveScheduleToServer()">Save</button>
+                </div>
+                <div class="col-sm-2">
+                <input class="form-control" type="text" ng-model="controller.nameToSaveScheduleAs" id="saveScheduleAsName">
+                </div>
+                <div class="col-sm-2">
+                <button class="btn btn-danger" id="saveScheduleButton" ng-disabled="controller.disableSaveToServerButton()" ng-click="controller.saveScheduleToServer()">Save</button>
+                </div>
             </div>
         </div>
       </div>

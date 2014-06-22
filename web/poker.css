@@ -202,3 +202,7 @@ a:hover {
 .button:focus {
     outline: 0;
 }
+
+#adminArea input {
+    color: black;
+}

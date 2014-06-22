@@ -16,7 +16,7 @@ class ScheduleService {
   }
 
   Future authenticateFirebase(Firebase firebase) {
-    return firebase.auth('');
+    return firebase.auth('Hd8qtu2V439X1CflnWxUso0zyziwB5NxeD9XFkkJ');
   }
 
   List<String> savedScheduleNames() {
