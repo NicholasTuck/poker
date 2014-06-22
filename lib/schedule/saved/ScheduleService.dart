@@ -5,7 +5,9 @@ import 'dart:html' hide Event;
 import 'dart:convert';
 import 'package:firebase/firebase.dart' ;
 import 'package:pokertimer/schedule/schedule.dart';
+import 'package:di/annotations.dart';
 
+@Injectable()
 class ScheduleService {
 
   final String _firebaseUrl = 'https://blindsupervision.firebaseio.com';
