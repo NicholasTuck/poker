@@ -4,6 +4,8 @@
   <head>
     <meta charset="utf-8">
     <title>Blind Supervision</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <link rel="stylesheet" href="bootstrap.css">
     <link rel="stylesheet" href="poker.css">
 
@@ -14,7 +16,7 @@
     <div class="clearfix" id="blindSupervision" poker-controller ng-cloak>
 
       <!-- Current Level -->
-      <div class="levelWrapper clearfix" style="height: 135px;">
+      <div class="levelWrapper clearfix">
         <div class="levelNumber"><span class="levelNumberSpan">{{controller.currentLevel +1}}</span></div>
         <div class="countdownArea">
           <countdown class="countdown" ng-unless="controller.isSuddenDeath"
@@ -31,30 +33,30 @@
 
 
       <!-- Next Level -->
-      <div class="levelWrapper roundCorners clearfix" style="width: 80%; height: 110px;"
+      <div class="levelWrapper roundCorners clearfix" style="width: 80%;"
            ng-if="!controller.isLastLevel">
         <div class="levelNumber"><span class="levelNumberSpan">{{controller.currentLevel +2}}</span></div>
         <div class="countdownArea">
           <h1>{{controller.levelLength}}:00</h1>
         </div>
-
-        <blind class="blind" style="font-size: .8em" blind="controller.nextBlind"></blind>
+        
+        <blind class="blind" style="font-size: .8em" blind="controller.nextBlind"></blind>   
       </div>
 
 
-      <div id="controllButtons" ng-unless="controller.isSuddenDeath">
-        <button class="button" ng-click="controller.toggleTimer()">{{controller.controlText}}</button>
-        <button class="button" id="resetButton" ng-click="controller.resetLevel()">Reset</button>
-      </div>
+        <div id="controllButtons" ng-unless="controller.isSuddenDeath" class="btn-group btn-group-lg">
+            <a href="" class="btn btn-danger" ng-click="controller.toggleTimer()">{{controller.controlText}}</a>
+            <a href="" class="btn btn-danger" id="resetButton" ng-click="controller.resetLevel()">Reset</a>
+        </div>
 
-      <div class="chipsWrapper roundCorners clearfix" style="width: 80%; height: 110px;">
+      <div class="chipsWrapper roundCorners clearfix" style="width: 80%;">
         <chip class="chip" chips="controller.chips"></chip>
       </div>
 
       <!-- Maybe admin area can be it's own component ?? -->
       <div style="margin-left:5px;">
         <div style="text-align:left;">
-          <a ng-click="controller.toggleAdminArea()" href="#">Administration</a>
+          <a ng-click="controller.toggleAdminArea()" style="color: #F1D129;" href="#">Administration</a>
         </div>
         <div id="adminArea" hidden style="text-align: left;">
 
@@ -85,6 +87,10 @@
       <div id="title">Blind Supervision</div>
     </div>
 
+    <audio id="timer-alert" src="audio/Alarm-Positive.wav" preload="auto"></audio>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="bootstrap.min.js"></script>
     <script type="application/dart" src="poker.dart"></script>
     <script src="packages/browser/dart.js"></script>
     <!--Yes, this is necessary-->

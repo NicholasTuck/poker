@@ -74,6 +74,7 @@ class PokerController {
   void onTimerToggled(ScopeEvent scopeEvent, bool toggledOn) {isRunning = toggledOn;}
 
   void onLevelComplete() {
+    querySelector("#timer-alert").play();
     if (notCompleteWithAllLevels()) {
       startNextLevel();
     } else {
