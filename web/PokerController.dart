@@ -131,4 +131,8 @@ class PokerController {
   void saveScheduleToServer() {
     _scheduleService.saveSchedule(nameToSaveScheduleAs, schedule);
   }
+
+  void loadScheduleFromServer() {
+    log.fine("Loading $selectedServerSchedule");
+  }
 }

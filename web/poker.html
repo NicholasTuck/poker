@@ -69,25 +69,29 @@
             <div>
                 From File: <input type="file" id="upload" ng-change="controller.onFileLoad()"/>
             </div>
-            <div class="row" ng-if="!controller.noAvailableSchedules()">
+            <div class="row" ng-unless="controller.noAvailableSchedules()">
                 <div class="col-sm-3">
                     <label for="scheduleNameDropDown">From Server</label>
                 </div>
                 <div  class="col-sm-2">
-                    <select class="form-control" ng-model="controller.savedScheduleNames[0]" id="scheduleNameDropDown" >
+                    <select class="form-control" ng-model="controller.selectedServerSchedule" id="scheduleNameDropDown" >
                         <option ng-repeat="scheduleName in controller.savedScheduleNames" ng-value="scheduleName">{{scheduleName}}</option>
                     </select>
                 </div>
+                <div class="col-sm-2">
+                    <button class="btn btn-danger" id="loadScheduleButton" ng-click="controller.loadScheduleFromServer()">Load</button>
+                </div>
             </div>
+            <br/>
             <div class="row">
                 <div class="col-sm-3">
-                <label for="saveScheduleAsName">Save Current Schedule as</label>
+                    <label for="saveScheduleAsName">Save Current Schedule as</label>
                 </div>
                 <div class="col-sm-2">
-                <input class="form-control" type="text" ng-model="controller.nameToSaveScheduleAs" id="saveScheduleAsName">
+                    <input class="form-control" type="text" ng-model="controller.nameToSaveScheduleAs" id="saveScheduleAsName">
                 </div>
                 <div class="col-sm-2">
-                <button class="btn btn-danger" id="saveScheduleButton" ng-disabled="controller.disableSaveToServerButton()" ng-click="controller.saveScheduleToServer()">Save</button>
+                    <button class="btn btn-danger" id="saveScheduleButton" ng-disabled="controller.disableSaveToServerButton()" ng-click="controller.saveScheduleToServer()">Save</button>
                 </div>
             </div>
         </div>
