@@ -22,10 +22,11 @@
           <countdown class="countdown" ng-unless="controller.isSuddenDeath"
             start-time="controller.levelLength"
             is-running="controller.isRunning"
-    	      on-countdown-complete="controller.onLevelComplete()">
+    	    on-countdown-complete="controller.onLevelComplete()">
           </countdown>
+          <audio id="timer-alert" src="audio/Alarm-Positive.wav" preload="auto"></audio>
 
-          <h1 id="suddenDeath" ng-if="controller.isSuddenDeath">Sudden Death</h1>
+            <h1 id="suddenDeath" ng-if="controller.isSuddenDeath">Sudden Death</h1>
         </div>
 
         <blind class="blind" blind="controller.currentBlind"></blind>
@@ -34,7 +35,7 @@
 
       <!-- Next Level -->
       <div class="levelWrapper roundCorners clearfix" style="width: 80%;"
-           ng-if="!controller.isLastLevel">
+           ng-unless="controller.isLastLevel">
         <div class="levelNumber"><span class="levelNumberSpan">{{controller.currentLevel +2}}</span></div>
         <div class="countdownArea">
           <h1>{{controller.levelLength}}:00</h1>
@@ -97,7 +98,6 @@
       <div id="title">Blind Supervision</div>
     </div>
 
-    <audio id="timer-alert" src="audio/Alarm-Positive.wav" preload="auto"></audio>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="bootstrap.min.js"></script>
