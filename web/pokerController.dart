@@ -82,7 +82,8 @@ class PokerController {
 
   void onLevelComplete() {
     AudioElement audioElement = (querySelector("#timer-alert") as AudioElement);
-    audioElement.currentTime = 0;     // this is working in dart2js but not in dartium
+//    audioElement.currentTime = 0;     // current time is not being set properly here in dartium
+    audioElement.src = "audio/Alarm-Positive.wav";    // workaround for dartium
     audioElement.play();
 
     if (notCompleteWithAllLevels()) {
