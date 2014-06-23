@@ -12,8 +12,9 @@ class Schedule{
   List<Break> breaks;
   int currentBreakNumber = 0;
   
-  Schedule(this.blinds);
-  
+  Schedule(this.blinds, this.breaks);
+  Schedule.blindsOnly(this.blinds): this.breaks = new List<Break>();
+
   Schedule.fromJson(String jsonScheduleString){
     Map map = JSON.decode(jsonScheduleString);
     List theLevels = map['levels'];

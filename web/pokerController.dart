@@ -1,6 +1,7 @@
 import 'package:angular/angular.dart';
 import 'package:pokertimer/chip/chip.dart';
 import 'package:pokertimer/blinds/blind.dart';
+import 'package:pokertimer/schedule/break.dart';
 import 'package:pokertimer/schedule/schedule.dart';
 import 'package:pokertimer/schedule/saved/scheduleService.dart';
 import 'package:logging/logging.dart';
@@ -42,7 +43,13 @@ class PokerController {
       ..add(new Blind.blindsOnly(500, 1000))
       ..add(new Blind.blindsOnly(1000, 2000));
 
-    schedule = new Schedule(blinds);
+    List<Break> breaks = new List<Break>()
+      ..add(new Break(2, 5))
+      ..add(new Break(4, 5))
+      ..add(new Break(6, 10));
+
+    schedule = new Schedule.blindsOnly(blinds);
+//    schedule = new Schedule(blinds, breaks);
 
     if (DEBUGGING) {
       blinds.removeRange(3, blinds.length);
@@ -74,7 +81,11 @@ class PokerController {
   void onTimerToggled(ScopeEvent scopeEvent, bool toggledOn) {isRunning = toggledOn;}
 
   void onLevelComplete() {
-    (querySelector("#timer-alert") as AudioElement).play();
+    AudioElement audioElement = (querySelector("#timer-alert") as AudioElement);
+//    audioElement.currentTime = 0;     // current time is not being set properly here in dartium
+    audioElement.src = "audio/Alarm-Positive.wav";    // workaround for dartium
+    audioElement.play();
+
     if (notCompleteWithAllLevels()) {
       startNextLevel();
     } else {
