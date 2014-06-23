@@ -31,7 +31,7 @@ class Schedule{
       blindMapList.add(blind.toMap());
     }
 
-    return {'blinds':blindMapList};
+    return {'levels':blindMapList};
   }
 
   Blind get currentBlind => blinds[currentBlindNumber];

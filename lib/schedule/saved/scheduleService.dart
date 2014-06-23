@@ -6,12 +6,16 @@ import 'dart:convert';
 import 'package:firebase/firebase.dart' ;
 import 'package:pokertimer/schedule/schedule.dart';
 import 'package:di/annotations.dart';
+import 'package:logging/logging.dart';
 
 @Injectable()
 class ScheduleService {
 
+  static final Logger log = new Logger("ScheduleService");
+
   final String _firebaseUrl = 'https://blindsupervision.firebaseio.com';
-  List<String> savedSchedules = [];
+  List<String> savedScheduleNames = [];
+  Schedule newSchedule;
 
   ScheduleService() {
 
@@ -21,21 +25,21 @@ class ScheduleService {
     return firebase.auth('Hd8qtu2V439X1CflnWxUso0zyziwB5NxeD9XFkkJ');
   }
 
-  List<String> savedScheduleNames() {
+  List<String> retrieveSavedScheduleNames() {
     Firebase savedSchedulesReference = new Firebase("$_firebaseUrl/savedSchedules");
     authenticateFirebase(savedSchedulesReference).then((_) => findSavedScheduleNames(savedSchedulesReference));
 
-    return savedSchedules;
+    return savedScheduleNames;
   }
 
   void findSavedScheduleNames(Firebase firebase){
 
     firebase.onValue.forEach((Event event) {
 
-      savedSchedules.clear();
+      savedScheduleNames.clear();
 
       event.snapshot.val().forEach((key, value) {
-        savedSchedules.add(key);
+        savedScheduleNames.add(key);
       });
     });
   }
@@ -48,5 +52,23 @@ class ScheduleService {
     String jsonString = JSON.encode(scheduleMap);
 
     savedSchedulesReference.update({scheduleName: schedule.toMap()});
+  }
+
+  Schedule retrieveSchedule(String scheduleName) {
+    Firebase savedSchedulesReference = new Firebase("$_firebaseUrl/savedSchedules");
+    authenticateFirebase(savedSchedulesReference);
+
+    var child = savedSchedulesReference.child(scheduleName);
+
+    log.fine("Retrieving [${child.name()}] from ${savedSchedulesReference.name()}");
+
+    child.onValue.forEach((Event event) {
+      var levelsMap = event.snapshot.val()['levels'];
+      var scheduleJson = JSON.encode({'levels':levelsMap});
+
+      newSchedule = new Schedule.fromJson(scheduleJson);
+    });
+
+    return newSchedule;
   }
 }

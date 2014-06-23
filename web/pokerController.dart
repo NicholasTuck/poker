@@ -48,7 +48,7 @@ class PokerController {
       blinds.removeRange(3, blinds.length);
     }
 
-    savedScheduleNames = _scheduleService.savedScheduleNames();
+    savedScheduleNames = _scheduleService.retrieveSavedScheduleNames();
     selectedServerSchedule = noAvailableSchedules() ? "" : savedScheduleNames.first;
 
   }
@@ -133,6 +133,10 @@ class PokerController {
   }
 
   void loadScheduleFromServer() {
-    log.fine("Loading $selectedServerSchedule");
+    Schedule scheduleFromServer = _scheduleService.retrieveSchedule(selectedServerSchedule);
+    if(scheduleFromServer != null){
+      schedule = scheduleFromServer;
+      resetApp();
+    }
   }
 }

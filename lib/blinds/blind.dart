@@ -12,6 +12,6 @@ class Blind {
   Blind(this.smallBlind, this.bigBlind, this.ante);
 
   Map toMap(){
-    return {'smallBlind':smallBlind, 'bigBlind':bigBlind, 'ante':ante};
+    return {'small-blind':smallBlind, 'big-blind':bigBlind, 'ante':ante};
   }
 }
