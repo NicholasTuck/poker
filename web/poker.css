@@ -210,14 +210,15 @@ a:hover {
 .mainButton {
     font-size: 2em;
 }
-.paperButton::shadow #ripple {
+
+paper-button.colored::shadow #ripple {
     color: #000;
 }
-.paperButton:hover {
+paper-button.colored:hover {
     background: #e50224;
 }
 
-.colored {
+paper-button.colored{
     background: #ce0223;
     color: #fff;
 }
