@@ -222,3 +222,11 @@ paper-button.colored{
     background: #ce0223;
     color: #fff;
 }
+
+paper-input::shadow div, paper-input::shadow #input{
+    color: #fff;
+}
+paper-input /deep/ .focusedColor {
+    color: #a91124;
+    background: #a91124;
+}

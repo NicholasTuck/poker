@@ -16,6 +16,8 @@
 
       <link rel="import" href="packages/paper_elements/paper_button.html">
       <link rel="import" href="packages/paper_elements/paper_shadow.html">
+      <link rel="import" href="packages/paper_elements/paper_input.html">
+      <link rel="import" href="packages/paper_elements/roboto.html">
 
   </head>
   <body ng-app>
@@ -25,6 +27,7 @@
 
       <!-- Current Level -->
       <div class="levelWrapper clearfix">
+        <paper-shadow z="5"></paper-shadow>
         <div class="levelNumber"><span class="levelNumberSpan">{{controller.currentLevel +1}}</span></div>
         <div class="countdownArea">
           <countdown class="countdown" ng-unless="controller.isSuddenDeath"
@@ -44,6 +47,7 @@
       <!-- Next Level -->
       <div class="levelWrapper roundCorners clearfix" style="width: 80%;"
            ng-unless="controller.isLastLevel">
+          <paper-shadow z="3"></paper-shadow>
         <div class="levelNumber"><span class="levelNumberSpan">{{controller.currentLevel +2}}</span></div>
         <div class="countdownArea">
           <h1>{{controller.levelLength}}:00</h1>
@@ -53,15 +57,16 @@
       </div>
 
         <div ng-unless="controller.isSuddenDeath">
-            <paper-button raisedbutton="true" class="colored paperButton mainButton" tabindex="0"
+            <paper-button raisedbutton="true" class="colored paperButton mainButton" tabindex="1"
                           label="{{ controller.controlText }}"
                           ng-click=" controller.toggleTimer() "></paper-button>
-            <paper-button raisedbutton="true" class="colored paperButton mainButton" tabindex="1"
+            <paper-button raisedbutton="true" class="colored paperButton mainButton" tabindex="2"
                           label="Reset"
                           ng-click=" controller.resetLevel() "></paper-button>
         </div>
 
       <div class="chipsWrapper roundCorners clearfix" style="width: 80%;">
+        <paper-shadow z="1"></paper-shadow>
         <chip class="chip" chips="controller.chips"></chip>
       </div>
 
@@ -76,7 +81,7 @@
           http://www.shauninman.com/archive/2007/09/10/styling_file_inputs_with_css_and_the_dom
           http://stackoverflow.com/questions/3956286/how-to-remove-text-field-from-html-file-input
           -->
-            Import Schedule
+            <h2>Import Schedule</h2>
             <div>
                 From File: <input type="file" id="upload" ng-change="controller.onFileLoad()"/>
             </div>
@@ -90,7 +95,7 @@
                     </select>
                 </div>
                 <div class="col-sm-2">
-                    <button class="btn btn-danger" id="loadScheduleButton" ng-click="controller.loadScheduleFromServer()">Load</button>
+                    <paper-button label="load" class="colored" ng-click="controller.loadScheduleFromServer()"></paper-button>
                 </div>
             </div>
             <br/>
@@ -99,10 +104,11 @@
                     <label for="saveScheduleAsName">Save Current Schedule as</label>
                 </div>
                 <div class="col-sm-2">
+<!--                    <paper-input id="scheduleNameInput" floatingLabel="true" label="Save Current Schedule as..." ng-model="controller.nameToSaveScheduleAs"></paper-input> -->
                     <input class="form-control" type="text" ng-model="controller.nameToSaveScheduleAs" id="saveScheduleAsName">
                 </div>
                 <div class="col-sm-2">
-                    <button class="btn btn-danger" id="saveScheduleButton" ng-disabled="controller.disableSaveToServerButton()" ng-click="controller.saveScheduleToServer()">Save</button>
+                    <paper-button label="Save" class="colored" ng-disabled="controller.disableSaveToServerButton()" ng-click="controller.saveScheduleToServer()"></paper-button>
                 </div>
             </div>
         </div>
