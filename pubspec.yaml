@@ -6,16 +6,19 @@ dependencies:
     git:
       url: git://github.com/pho3nixf1re/firebase-dart.git
       ref: dependency-update
-  angular: '>=0.12.0 <0.13.0'
-  browser: ">=0.10.0+2 <0.11.0"
-  di: ">= 0.0.40"
-  intl: any
+  angular: '>=0.12.0'
+  browser: any
   js: any
+  paper_elements: any
   logging: any
-  logging_handlers: any
   unittest: any
 dev_dependencies:
-  dart_to_js_script_rewriter: ">=0.0.1+2 <0.1.0"
+  dart_to_js_script_rewriter: any
+
+#This is dangerous but wanting to try the paper elements
+dependency_overrides:
+  analyzer: '>=0.15.6 <0.16.0'
+  html5lib: '>=0.11.0 <0.12.0'
 transformers:
 - angular
 - dart_to_js_script_rewriter   # needs to be after angular, perhaps last

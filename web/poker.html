@@ -9,6 +9,14 @@
     <link rel="stylesheet" href="bootstrap.css">
     <link rel="stylesheet" href="poker.css">
 
+
+      <!-- used for paper_elements -->
+      <script src="packages/web_components/platform.js"></script>
+      <script src="packages/web_components/dart_support.js"></script>
+
+      <link rel="import" href="packages/paper_elements/paper_button.html">
+      <link rel="import" href="packages/paper_elements/paper_shadow.html">
+
   </head>
   <body ng-app>
     <div ng-hide="true">Please hold while we connect you with one of our operators...</div>
@@ -44,10 +52,13 @@
         <blind class="blind" style="font-size: .8em" blind="controller.nextBlind"></blind>   
       </div>
 
-
-        <div id="controllButtons" ng-unless="controller.isSuddenDeath" class="btn-group btn-group-lg">
-            <a href="" class="btn btn-danger" ng-click="controller.toggleTimer()">{{controller.controlText}}</a>
-            <a href="" class="btn btn-danger" id="resetButton" ng-click="controller.resetLevel()">Reset</a>
+        <div ng-unless="controller.isSuddenDeath">
+            <paper-button raisedbutton="true" class="colored paperButton mainButton" tabindex="0"
+                          label="{{ controller.controlText }}"
+                          ng-click=" controller.toggleTimer() "></paper-button>
+            <paper-button raisedbutton="true" class="colored paperButton mainButton" tabindex="1"
+                          label="Reset"
+                          ng-click=" controller.resetLevel() "></paper-button>
         </div>
 
       <div class="chipsWrapper roundCorners clearfix" style="width: 80%;">
@@ -106,6 +117,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="bootstrap.min.js"></script>
     <script src="https://cdn.firebase.com/v0/firebase.js"></script>
+
 
     <script type="application/dart" src="poker.dart"></script>
     <script src="packages/browser/dart.js"></script>

@@ -206,3 +206,18 @@ a:hover {
 #adminArea input {
     color: black;
 }
+
+.mainButton {
+    font-size: 2em;
+}
+.paperButton::shadow #ripple {
+    color: #000;
+}
+.paperButton:hover {
+    background: #e50224;
+}
+
+.colored {
+    background: #ce0223;
+    color: #fff;
+}

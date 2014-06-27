@@ -5,7 +5,7 @@ import 'package:pokertimer/schedule/break.dart';
 import 'package:pokertimer/schedule/schedule.dart';
 import 'package:pokertimer/schedule/saved/scheduleService.dart';
 import 'package:logging/logging.dart';
-import 'package:logging_handlers/logging_handlers_shared.dart';
+//import 'package:paper_elements/paper_button.dart';
 
 import 'dart:html';
 
