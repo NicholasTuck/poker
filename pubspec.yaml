@@ -17,8 +17,9 @@ dev_dependencies:
 
 #This is dangerous but wanting to try the paper elements
 dependency_overrides:
-  analyzer: '>=0.15.6 <0.16.0'
-  html5lib: '>=0.11.0 <0.12.0'
+  analyzer: '>=0.15.6'
+  html5lib: '>=0.11.0'
+  web_components: '>=0.4.0'   #angular wanted older version... hopefully okay
 transformers:
 - angular
 - dart_to_js_script_rewriter   # needs to be after angular, perhaps last
