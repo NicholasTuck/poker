@@ -11,7 +11,6 @@
 .DS_Store
 packages
 .project
-pubspec.lock
 *.orig
 
 ### Unsure about the following ###
