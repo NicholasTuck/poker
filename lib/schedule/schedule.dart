@@ -1,7 +1,7 @@
 library schedule;
 
 import 'dart:convert';
-import 'package:pokertimer/blinds/blind.dart';
+import 'package:pokertimer/schedule/blinds/blind.dart';
 import 'break.dart';
 
 class Schedule{

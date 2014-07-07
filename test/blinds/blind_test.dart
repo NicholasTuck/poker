@@ -1,5 +1,5 @@
 import "package:unittest/unittest.dart";
-import "package:pokertimer/blinds/blind.dart";
+import "package:pokertimer/schedule/blinds/blind.dart";
 
 main() {
   test("Blinds Only Constructor should have ante of 0", () {

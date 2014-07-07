@@ -2,7 +2,7 @@ import 'package:di/di.dart';
 import 'package:angular/angular.dart';
 import 'package:angular/application_factory.dart';
 import 'package:logging/logging.dart';
-import 'package:pokertimer/blinds/blindComponent.dart';
+import 'package:pokertimer/schedule/blinds/blindComponent.dart';
 import 'package:pokertimer/chip/chipComponent.dart';
 import 'package:pokertimer/countdown/countdown.dart';
 import 'package:pokertimer/schedule/saved/scheduleService.dart';

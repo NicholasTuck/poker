@@ -1,6 +1,6 @@
 import 'package:angular/angular.dart';
 import 'package:pokertimer/chip/chip.dart';
-import 'package:pokertimer/blinds/blind.dart';
+import 'package:pokertimer/schedule/blinds/blind.dart';
 import 'package:pokertimer/schedule/break.dart';
 import 'package:pokertimer/schedule/schedule.dart';
 import 'package:pokertimer/schedule/saved/scheduleService.dart';
@@ -65,7 +65,7 @@ class PokerController {
   Blind get currentBlind => _schedule.currentBlind;
   Blind get nextBlind => _schedule.nextBlind;
   int get currentLevel => _schedule.currentBlindNumber;
-  double get levelLength => _schedule.levelLength;
+  double get levelLength => _schedule.levelLength.toDouble();
 
   Break get currentBreak => _schedule.currentBreak;
   Break get nextBreak => _schedule.nextBreak;
@@ -76,7 +76,7 @@ class PokerController {
     if (_schedule.onBreak) {
       return currentBreak.length.toDouble();
     } else {
-      return _schedule.levelLength;
+      return _schedule.levelLength.toDouble();
     }
   }
 

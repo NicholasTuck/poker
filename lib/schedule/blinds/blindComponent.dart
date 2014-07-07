@@ -8,8 +8,8 @@ import 'blind.dart';
 
 @Component(
     selector: 'blind',
-    templateUrl: 'packages/pokertimer/blinds/blindComponent.html',
-    cssUrl: 'packages/pokertimer/blinds/blindComponent.css',
+    templateUrl: 'packages/pokertimer/schedule/blinds/blindComponent.html',
+    cssUrl: 'packages/pokertimer/schedule/blinds/blindComponent.css',
     publishAs: 'controller',
     map: const {
         'blind' : '=>blind'
