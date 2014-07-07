@@ -14,16 +14,17 @@ import 'dart:html';
     publishAs: 'controller'
 )
 class PokerController {
-  ScheduleService _scheduleService;
+  Scope _scope;
   static final Logger log = new Logger("PokerController");
   static const bool DEBUGGING = true;
-  Scope _scope;
+  ScheduleService _scheduleService;
 
   bool isRunning = false;
 
-  int levelLength = 20;
   bool isSuddenDeath = false;
-  Schedule schedule;
+  Schedule _schedule;
+
+
   String selectedServerSchedule;
   String nameToSaveScheduleAs;
   List<String> savedScheduleNames = [];
@@ -48,11 +49,11 @@ class PokerController {
       ..add(new Break(4, 5))
       ..add(new Break(6, 10));
 
-    schedule = new Schedule.blindsOnly(blinds);
-//    schedule = new Schedule(blinds, breaks);
+//    _schedule = new Schedule.blindsOnly(blinds);
+    _schedule = new Schedule(blinds, breaks);
 
     if (DEBUGGING) {
-      blinds.removeRange(3, blinds.length);
+      blinds.removeRange(5, blinds.length);
     }
 
     savedScheduleNames = _scheduleService.retrieveSavedScheduleNames();
@@ -61,20 +62,36 @@ class PokerController {
   }
 
   String get controlText => isRunning ? "Pause" : "Play";
-  Blind get currentBlind => schedule.currentBlind;
-  Blind get nextBlind => schedule.nextBlind;
-  int get currentLevel => schedule.currentBlindNumber;
+  Blind get currentBlind => _schedule.currentBlind;
+  Blind get nextBlind => _schedule.nextBlind;
+  int get currentLevel => _schedule.currentBlindNumber;
+  double get levelLength => _schedule.levelLength;
+
+  Break get currentBreak => _schedule.currentBreak;
+  Break get nextBreak => _schedule.nextBreak;
+  bool get breakIsNext => _schedule.breakIsNext;
+  bool get onBreak => _schedule.onBreak;
+
+  double get currentCountdownLength {
+    if (_schedule.onBreak) {
+      return currentBreak.length.toDouble();
+    } else {
+      return _schedule.levelLength;
+    }
+  }
+
+  String get currentLevelIdentifier => (_schedule.onBreak ? "b" : currentLevel + 1);
 
   void toggleTimer() {
     isRunning = !isRunning;
   }
 
   void startNextLevel() {
-    schedule.currentBlindNumber++;
+    _schedule.startNextEvent();
     _scope.broadcast("restartCountdown");
   }
 
-  bool get isLastLevel => schedule.currentBlindNumber == (schedule.blinds.length - 1);
+  bool get isLastLevel => _schedule.currentBlindNumber == (_schedule.blinds.length - 1);
 
   void resetLevel() {_scope.broadcast("resetCountdown");}
 
@@ -98,12 +115,12 @@ class PokerController {
   }
 
   bool notCompleteWithAllLevels() {
-    return schedule.currentBlindNumber + 1 < schedule.blinds.length;
+    return _schedule.currentBlindNumber + 1 < _schedule.blinds.length;
   }
 
   void resetApp() {
     isRunning = false;
-    schedule.reset();
+    _schedule.reset();
     isSuddenDeath = false;
     resetLevel();
   }
@@ -127,7 +144,7 @@ class PokerController {
   }
 
   void parseData(var result) {
-    schedule = new Schedule.fromJson(result);
+    _schedule = new Schedule.fromJson(result);
     resetApp();
   }
 
@@ -136,17 +153,17 @@ class PokerController {
   }
 
   bool disableSaveToServerButton() {
-    return nameToSaveScheduleAs == null || nameToSaveScheduleAs == "" || schedule == null;
+    return nameToSaveScheduleAs == null || nameToSaveScheduleAs == "" || _schedule == null;
   }
 
   void saveScheduleToServer() {
-    _scheduleService.saveSchedule(nameToSaveScheduleAs, schedule);
+    _scheduleService.saveSchedule(nameToSaveScheduleAs, _schedule);
   }
 
   void loadScheduleFromServer() {
     Schedule scheduleFromServer = _scheduleService.retrieveSchedule(selectedServerSchedule);
     if(scheduleFromServer != null){
-      schedule = scheduleFromServer;
+      _schedule = scheduleFromServer;
       resetApp();
     }
   }
