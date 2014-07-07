@@ -1,0 +1,20 @@
+<div class="levelWrapper clearfix" ng-class="{'nextLevel' : !cmp.isCurrentLevel}">
+    <paper-shadow ng-if="cmp.isCurrentLevel" z="5"></paper-shadow>
+    <paper-shadow ng-unless="cmp.isCurrentLevel" z="3"></paper-shadow>
+    <div class="levelNumber">
+        <span class="levelNumberSpan">{{cmp.identifier}}</span>
+    </div>
+    <div class="countdownArea">
+        <countdown class="countdown" ng-unless="cmp.isSuddenDeath || !cmp.isCurrentLevel"
+                   start-time="cmp.startTime"
+                   is-running="cmp.isRunning"
+                   on-countdown-complete="cmp.countdownCompleteCallback()">
+        </countdown>
+        <div ng-unless="cmp.isCurrentLevel" style="float: left;"><h1>{{cmp.startTime}}:00</h1></div>
+
+        <div ng-if="cmp.onBreak" style="float: left; margin-left: 50px;"><h1 class="textOnlyLevel" id="break">Break</h1></div>
+        <h1 class="textOnlyLevel" id="suddenDeath" ng-if="cmp.isSuddenDeath">Sudden Death</h1>
+    </div>
+
+    <blind class="blind" ng-unless="cmp.onBreak" blind="cmp.blind"></blind>
+</div>

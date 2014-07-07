@@ -65,22 +65,31 @@ class PokerController {
   Blind get currentBlind => _schedule.currentBlind;
   Blind get nextBlind => _schedule.nextBlind;
   int get currentLevel => _schedule.currentBlindNumber;
-  double get levelLength => _schedule.levelLength.toDouble();
+  get levelLength => _schedule.levelLength;
 
   Break get currentBreak => _schedule.currentBreak;
   Break get nextBreak => _schedule.nextBreak;
   bool get breakIsNext => _schedule.breakIsNext;
   bool get onBreak => _schedule.onBreak;
 
-  double get currentCountdownLength {
+  int get currentCountdownLength {
     if (_schedule.onBreak) {
-      return currentBreak.length.toDouble();
+      return currentBreak.length;
     } else {
-      return _schedule.levelLength.toDouble();
+      return _schedule.levelLength;
+    }
+  }
+
+  int get nextCountdownLength {
+    if (_schedule.breakIsNext) {
+      return nextBreak.length;
+    } else {
+      return _schedule.levelLength;
     }
   }
 
   String get currentLevelIdentifier => (_schedule.onBreak ? "b" : currentLevel + 1);
+  String get nextLevelIdentifier => (breakIsNext ? "b" : currentLevel + 2);
 
   void toggleTimer() {
     isRunning = !isRunning;

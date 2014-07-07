@@ -27,51 +27,31 @@
       <audio id="timer-alert" src="audio/Alarm-Positive.wav" preload="auto"></audio>
 
 
-        <!-- Current Level -->
-      <div class="levelWrapper clearfix">
-        <paper-shadow z="5"></paper-shadow>
-        <div class="levelNumber">
-            <span class="levelNumberSpan">{{controller.currentLevelIdentifier}}</span>
-        </div>
-        <div class="countdownArea">
-          <countdown class="countdown" ng-unless="controller.isSuddenDeath"
-            start-time="controller.currentCountdownLength"
-            is-running="controller.isRunning"
-    	    on-countdown-complete="controller.onLevelComplete()">
-          </countdown>
-            <div ng-if="controller.onBreak" style="float: left; margin-left: 50px;"><h1 class="textOnlyLevel" id="break">Break</h1></div>
-            <h1 class="textOnlyLevel" id="suddenDeath" ng-if="controller.isSuddenDeath">Sudden Death</h1>
-        </div>
-
-        <blind class="blind" ng-unless="controller.onBreak" blind="controller.currentBlind"></blind>
-      </div>
+        <!-- current level -->
+        <level blind="controller.currentBlind"
+               identifier="controller.currentLevelIdentifier"
+               on-countdown-complete="controller.onLevelComplete()"
+               start-time="controller.currentCountdownLength"
+               is-sudden-death="controller.isSuddenDeath"
+               on-break="controller.onBreak"
+               is-running="controller.isRunning"
+               is-current-level="true">
+        </level>
 
 
+        <!-- next level -->
+        <level blind="controller.nextBlind"
+               identifier="controller.nextLevelIdentifier"
+               start-time="controller.nextCountdownLength"
+               on-break="controller.breakIsNext"
+               is-current-level="false"
+
+               ng-unless="controller.isLastLevel"
+               >
+        </level>
 
 
-      <!-- Next Level -->
-      <div class="levelWrapper roundCorners clearfix" style="width: 80%;"
-           ng-unless="controller.isLastLevel || controller.breakIsNext">
-          <paper-shadow z="3"></paper-shadow>
-        <div class="levelNumber"><span class="levelNumberSpan">{{controller.currentLevel +2}}</span></div>
-        <div class="countdownArea">
-          <h1>{{controller.levelLength}}:00</h1>
-        </div>
-
-        <blind class="blind" style="font-size: .8em" blind="controller.nextBlind"></blind>
-      </div>
-
-      <div class="levelWrapper roundCorners clearfix" style="width: 80%;"
-           ng-if="controller.breakIsNext">
-          <paper-shadow z="3"></paper-shadow>
-          <div class="levelNumber"><span class="levelNumberSpan">b</span></div>
-          <div class="countdownArea">
-              <h1>{{controller.nextBreak.length}}:00</h1>
-          </div>
-      </div>
-
-
-
+      <!-- controlls -->
       <div ng-unless="controller.isSuddenDeath">
           <paper-button raisedbutton="true" class="colored paperButton mainButton" tabindex="1"
                         label="{{ controller.controlText }}"
@@ -81,10 +61,14 @@
                         ng-click=" controller.resetLevel() "></paper-button>
       </div>
 
+
+
+      <!-- chips -->
       <div class="chipsWrapper roundCorners clearfix" style="width: 80%;">
         <paper-shadow z="1"></paper-shadow>
         <chip class="chip" chips="controller.chips"></chip>
       </div>
+
 
       <!-- Maybe admin area can be it's own component ?? -->
       <div style="margin-left:5px;">

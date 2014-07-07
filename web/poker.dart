@@ -6,6 +6,7 @@ import 'package:pokertimer/schedule/blinds/blindComponent.dart';
 import 'package:pokertimer/chip/chipComponent.dart';
 import 'package:pokertimer/countdown/countdown.dart';
 import 'package:pokertimer/schedule/saved/scheduleService.dart';
+import 'package:pokertimer/schedule/level/LevelComponent.dart';
 import 'dart:html';
 
 import 'pokerController.dart';
@@ -26,6 +27,7 @@ class PokerModule extends Module {
     type(BlindController);
     type(ChipController);
     type(ScheduleService);
+    type(LevelComponent);
   }
 }
 
