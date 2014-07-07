@@ -49,7 +49,6 @@ class PokerController {
       ..add(new Break(4, 5))
       ..add(new Break(6, 10));
 
-//    _schedule = new Schedule.blindsOnly(blinds);
     _schedule = new Schedule(blinds, breaks);
 
     if (DEBUGGING) {
@@ -153,7 +152,7 @@ class PokerController {
   }
 
   void parseData(var result) {
-    _schedule = new Schedule.fromJson(result);
+    _schedule = new Schedule.fromMap(result);
     resetApp();
   }
 

@@ -11,6 +11,12 @@ class Blind {
 
   Blind(this.smallBlind, this.bigBlind, this.ante);
 
+  Blind.fromMap(Map blindMap) {
+    smallBlind = blindMap['small-blind'];
+    bigBlind = blindMap['big-blind'];
+    ante = blindMap['ante'];
+  }
+
   Map toMap(){
     return {'small-blind':smallBlind, 'big-blind':bigBlind, 'ante':ante};
   }

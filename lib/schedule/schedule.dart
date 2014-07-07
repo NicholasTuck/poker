@@ -18,25 +18,30 @@ class Schedule{
   Schedule(this.blinds, this.breaks);
   Schedule.blindsOnly(this.blinds): this.breaks = new List<Break>();
 
-  //todo add breaks and level length
-  Schedule.fromJson(String jsonScheduleString){
-    Map map = JSON.decode(jsonScheduleString);
-    List allLevels = map['levels'];
+  Schedule.fromMap(Map scheduleMap){
 
     blinds = new List<Blind>();
-    for (var i = 0; i < allLevels.length; i++) {
-      this.blinds.add(new Blind(allLevels[i]['small-blind'],allLevels[i]['big-blind'], allLevels[i]['ante']));
-    }
+    breaks = new List<Break>();
+    levelLength = scheduleMap['levelLength'];
+
+    List allBlinds = scheduleMap['blinds'];
+    allBlinds.forEach((Map blindMap) => this.blinds.add(new Blind.fromMap(blindMap)));
+
+    List allBreaks = scheduleMap['breaks'];
+    allBreaks.forEach((Map breakMap) => this.breaks.add(new Break.fromMap(breakMap)));
   }
 
-  //todo add breaks and level length
   Map toMap(){
     List<Map> blindMapList = [];
-    for(Blind blind in blinds){
-      blindMapList.add(blind.toMap());
-    }
+    blinds.forEach((Blind blind) => blindMapList.add(blind.toMap()));
 
-    return {'levels':blindMapList};
+    List<Map> breakMapList = [];
+    breaks.forEach((Break currentBreak) => breakMapList.add(currentBreak.toMap()));
+
+    return {'levelLength': levelLength,
+            'blinds':blindMapList,
+            'breaks':breakMapList
+          };
   }
 
   Blind get currentBlind => blinds[currentBlindNumber];

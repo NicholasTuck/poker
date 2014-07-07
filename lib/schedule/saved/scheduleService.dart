@@ -63,10 +63,8 @@ class ScheduleService {
     log.fine("Retrieving [${child.name()}] from ${savedSchedulesReference.name()}");
 
     child.onValue.forEach((Event event) {
-      var levelsMap = event.snapshot.val()['levels'];
-      var scheduleJson = JSON.encode({'levels':levelsMap});
-
-      newSchedule = new Schedule.fromJson(scheduleJson);
+      var scheduleMap = event.snapshot.val();
+      newSchedule = new Schedule.fromMap(scheduleMap);
     });
 
     return newSchedule;
