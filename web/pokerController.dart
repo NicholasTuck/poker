@@ -3,6 +3,7 @@ import 'package:pokertimer/chip/chip.dart';
 import 'package:pokertimer/schedule/blinds/blind.dart';
 import 'package:pokertimer/schedule/break.dart';
 import 'package:pokertimer/schedule/schedule.dart';
+import 'package:pokertimer/schedule/ScheduleModel.dart';
 import 'package:pokertimer/schedule/saved/scheduleService.dart';
 import 'package:logging/logging.dart';
 //import 'package:paper_elements/paper_button.dart';
@@ -15,9 +16,12 @@ import 'dart:html';
 )
 class PokerController {
   Scope _scope;
+  RootScope _rootScope;
+
   static final Logger log = new Logger("PokerController");
   static const bool DEBUGGING = true;
   ScheduleService _scheduleService;
+  ScheduleModel _scheduleModel;
 
   bool isRunning = false;
 
@@ -34,30 +38,21 @@ class PokerController {
     ..add(new Chip(value: 25, color: "Green"))
     ..add(new Chip(value: 100, color: "Black"));
 
-  PokerController(Scope this._scope, this._scheduleService) {
-    List<Blind> blinds = new List<Blind>()
-      ..add(new Blind.blindsOnly(25, 50))
-      ..add(new Blind.anteOnly(100))
-      ..add(new Blind(75, 150, 50))
-      ..add(new Blind.blindsOnly(100, 200))
-      ..add(new Blind.blindsOnly(200, 400))
-      ..add(new Blind.blindsOnly(500, 1000))
-      ..add(new Blind.blindsOnly(1000, 2000));
+  PokerController(Scope this._scope, this._rootScope, this._scheduleService, ScheduleModel this._scheduleModel) {
+    _rootScope.on(NEW_SCHEDULE_LOADED_EVENT).listen((ScopeEvent event) => loadSchedule(event.data as Schedule));
+    _rootScope.on(LEVEL_COMPLETED_EVENT).listen((_) => playAudio());
+    _rootScope.on(NEXT_EVENT_STARTED).listen((_) => startNextLevel());
+    _rootScope.on(ALL_EVENTS_COMPLETED).listen((_) => startSuddenDeath());
 
-    List<Break> breaks = new List<Break>()
-      ..add(new Break(2, 5))
-      ..add(new Break(4, 5))
-      ..add(new Break(6, 10));
-
-    _schedule = new Schedule(blinds, breaks);
-
-    if (DEBUGGING) {
-      blinds.removeRange(5, blinds.length);
-    }
+    loadSchedule(_scheduleModel.schedule);
 
     savedScheduleNames = _scheduleService.retrieveSavedScheduleNames();
     selectedServerSchedule = noAvailableSchedules() ? "" : savedScheduleNames.first;
+  }
 
+  void loadSchedule(Schedule newSchedule) {
+    _schedule = newSchedule;
+    resetApp();
   }
 
   String get controlText => isRunning ? "Pause" : "Play";
@@ -95,7 +90,6 @@ class PokerController {
   }
 
   void startNextLevel() {
-    _schedule.startNextEvent();
     _scope.broadcast("restartCountdown");
   }
 
@@ -105,26 +99,18 @@ class PokerController {
 
   void onTimerToggled(ScopeEvent scopeEvent, bool toggledOn) {isRunning = toggledOn;}
 
-  void onLevelComplete() {
+  void playAudio() {
     AudioElement audioElement = (querySelector("#timer-alert") as AudioElement);
 //    audioElement.currentTime = 0;     // current time is not being set properly here in dartium
     audioElement.src = "audio/Alarm-Positive.wav";    // workaround for dartium
     audioElement.play();
-
-    if (notCompleteWithAllLevels()) {
-      startNextLevel();
-    } else {
-      startSuddenDeath();
-    }
   }
 
   void startSuddenDeath() {
     isSuddenDeath = true;
   }
 
-  bool notCompleteWithAllLevels() {
-    return _schedule.currentBlindNumber + 1 < _schedule.blinds.length;
-  }
+
 
   void resetApp() {
     isRunning = false;
@@ -171,8 +157,7 @@ class PokerController {
   void loadScheduleFromServer() {
     Schedule scheduleFromServer = _scheduleService.retrieveSchedule(selectedServerSchedule);
     if(scheduleFromServer != null){
-      _schedule = scheduleFromServer;
-      resetApp();
+      _scheduleModel.schedule = scheduleFromServer;
     }
   }
 }
