@@ -24,9 +24,11 @@ class PokerController {
   ScheduleModel _scheduleModel;
 
   bool isRunning = false;
+  bool editMode = false;
 
   bool isSuddenDeath = false;
   Schedule _schedule;
+  String _loadedScheduleName = "Default Schedule";
 
 
   String selectedServerSchedule;
@@ -159,5 +161,21 @@ class PokerController {
     if(scheduleFromServer != null){
       _scheduleModel.schedule = scheduleFromServer;
     }
+  }
+
+  void editSchedule(){
+    log.fine("Editing schedule.");
+    editMode = true;
+  }
+
+  void cancelEdit(){
+    log.fine("Edit cancelled.");
+    editMode = false;
+  }
+
+  void saveSchedule(){
+    log.fine("Saving schedule.");
+    saveScheduleToServer();
+    editMode = false;
   }
 }

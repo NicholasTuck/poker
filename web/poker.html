@@ -24,93 +24,113 @@
     <div ng-hide="true">Please hold while we connect you with one of our operators...</div>
 
     <div class="clearfix" id="blindSupervision" poker-controller ng-cloak>
-      <audio id="timer-alert" src="audio/Alarm-Positive.wav" preload="auto"></audio>
+        <audio id="timer-alert" src="audio/Alarm-Positive.wav" preload="auto"></audio>
 
 
-        <!-- current level -->
-        <level blind="controller.currentBlind"
-               identifier="controller.currentLevelIdentifier"
-               start-time="controller.currentCountdownLength"
-               is-sudden-death="controller.isSuddenDeath"
-               on-break="controller.onBreak"
-               is-running="controller.isRunning"
-               is-current-level="true">
-        </level>
+        <!-- Maybe admin area can be it's own component ?? -->
+        <div ng-hide="controller.editMode" style="margin-left:5px;">
+            <div style="text-align:left;">
+                <a ng-click="controller.toggleAdminArea()" style="color: #F1D129;" href="#">Administration</a>
+            </div>
+            <div id="adminArea" hidden style="text-align: left;">
 
-
-        <!-- next level -->
-        <level blind="controller.nextBlind"
-               identifier="controller.nextLevelIdentifier"
-               start-time="controller.nextCountdownLength"
-               on-break="controller.breakIsNext"
-               is-current-level="false"
-
-               ng-unless="controller.isLastLevel"
-               >
-        </level>
-
-
-      <!-- controlls -->
-      <div ng-unless="controller.isSuddenDeath">
-          <paper-button raisedbutton="true" class="colored paperButton mainButton" tabindex="1"
-                        label="{{ controller.controlText }}"
-                        ng-click=" controller.toggleTimer() "></paper-button>
-          <paper-button raisedbutton="true" class="colored paperButton mainButton" tabindex="2"
-                        label="Reset"
-                        ng-click=" controller.resetLevel() "></paper-button>
-      </div>
-
-
-
-      <!-- chips -->
-      <div class="chipsWrapper roundCorners clearfix" style="width: 80%;">
-        <paper-shadow z="1"></paper-shadow>
-        <chip class="chip" chips="controller.chips"></chip>
-      </div>
-
-
-      <!-- Maybe admin area can be it's own component ?? -->
-      <div style="margin-left:5px;">
-        <div style="text-align:left;">
-          <a ng-click="controller.toggleAdminArea()" style="color: #F1D129;" href="#">Administration</a>
+                <!-- need to try to hide this and add our own button:
+                http://www.shauninman.com/archive/2007/09/10/styling_file_inputs_with_css_and_the_dom
+                http://stackoverflow.com/questions/3956286/how-to-remove-text-field-from-html-file-input
+                -->
+                <h2>Import Schedule</h2>
+                <div>
+                    From File: <input type="file" id="upload" ng-change="controller.onFileLoad()"/>
+                </div>
+                <div class="row" ng-unless="controller.noAvailableSchedules()">
+                    <div class="col-sm-3">
+                        <label for="scheduleNameDropDown">From Server</label>
+                    </div>
+                    <div  class="col-sm-2">
+                        <select class="form-control" ng-model="controller.selectedServerSchedule" id="scheduleNameDropDown" >
+                            <option ng-repeat="scheduleName in controller.savedScheduleNames" ng-value="scheduleName">{{scheduleName}}</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
+                        <paper-button label="load" class="colored" ng-click="controller.loadScheduleFromServer()"></paper-button>
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <label for="saveScheduleAsName">Save Current Schedule as</label>
+                    </div>
+                    <div class="col-sm-2">
+                        <!--                    <paper-input id="scheduleNameInput" floatingLabel="true" label="Save Current Schedule as..." ng-model="controller.nameToSaveScheduleAs"></paper-input> -->
+                        <input class="form-control" type="text" ng-model="controller.nameToSaveScheduleAs" id="saveScheduleAsName">
+                    </div>
+                    <div class="col-sm-2">
+                        <paper-button label="Save" class="colored" ng-disabled="controller.disableSaveToServerButton()" ng-click="controller.saveScheduleToServer()"></paper-button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2">
+                        <paper-button label="Edit" class="colored" ng-click="controller.editSchedule()"></paper-button>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div id="adminArea" hidden style="text-align: left;">
+        <br/><br/>
 
-          <!-- need to try to hide this and add our own button:
-          http://www.shauninman.com/archive/2007/09/10/styling_file_inputs_with_css_and_the_dom
-          http://stackoverflow.com/questions/3956286/how-to-remove-text-field-from-html-file-input
-          -->
-            <h2>Import Schedule</h2>
-            <div>
-                From File: <input type="file" id="upload" ng-change="controller.onFileLoad()"/>
-            </div>
-            <div class="row" ng-unless="controller.noAvailableSchedules()">
-                <div class="col-sm-3">
-                    <label for="scheduleNameDropDown">From Server</label>
-                </div>
-                <div  class="col-sm-2">
-                    <select class="form-control" ng-model="controller.selectedServerSchedule" id="scheduleNameDropDown" >
-                        <option ng-repeat="scheduleName in controller.savedScheduleNames" ng-value="scheduleName">{{scheduleName}}</option>
-                    </select>
-                </div>
-                <div class="col-sm-2">
-                    <paper-button label="load" class="colored" ng-click="controller.loadScheduleFromServer()"></paper-button>
-                </div>
-            </div>
-            <br/>
+        <div ng-show="controller.editMode">
             <div class="row">
-                <div class="col-sm-3">
-                    <label for="saveScheduleAsName">Save Current Schedule as</label>
+                <div class="col-sm-2">
+                    <paper-button label="Save" class="colored" ng-click="controller.saveSchedule()"></paper-button>
                 </div>
                 <div class="col-sm-2">
-<!--                    <paper-input id="scheduleNameInput" floatingLabel="true" label="Save Current Schedule as..." ng-model="controller.nameToSaveScheduleAs"></paper-input> -->
-                    <input class="form-control" type="text" ng-model="controller.nameToSaveScheduleAs" id="saveScheduleAsName">
-                </div>
-                <div class="col-sm-2">
-                    <paper-button label="Save" class="colored" ng-disabled="controller.disableSaveToServerButton()" ng-click="controller.saveScheduleToServer()"></paper-button>
+                    <paper-button label="Cancel" class="colored" ng-click="controller.cancelEdit()"></paper-button>
                 </div>
             </div>
         </div>
+
+        <div ng-hide="controller.editMode">
+
+
+            <!-- current level -->
+            <level blind="controller.currentBlind"
+                   identifier="controller.currentLevelIdentifier"
+                   start-time="controller.currentCountdownLength"
+                   is-sudden-death="controller.isSuddenDeath"
+                   on-break="controller.onBreak"
+                   is-running="controller.isRunning"
+                   is-current-level="true">
+            </level>
+
+
+            <!-- next level -->
+            <level blind="controller.nextBlind"
+                   identifier="controller.nextLevelIdentifier"
+                   start-time="controller.nextCountdownLength"
+                   on-break="controller.breakIsNext"
+                   is-current-level="false"
+
+                   ng-unless="controller.isLastLevel"
+                   >
+            </level>
+
+
+          <!-- controlls -->
+          <div ng-unless="controller.isSuddenDeath">
+              <paper-button raisedbutton="true" class="colored paperButton mainButton" tabindex="1"
+                            label="{{ controller.controlText }}"
+                            ng-click=" controller.toggleTimer() "></paper-button>
+              <paper-button raisedbutton="true" class="colored paperButton mainButton" tabindex="2"
+                            label="Reset"
+                            ng-click=" controller.resetLevel() "></paper-button>
+          </div>
+
+
+
+          <!-- chips -->
+          <div class="chipsWrapper roundCorners clearfix" style="width: 80%;">
+            <paper-shadow z="1"></paper-shadow>
+            <chip class="chip" chips="controller.chips"></chip>
+          </div>
       </div>
 
 
