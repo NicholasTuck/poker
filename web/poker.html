@@ -77,7 +77,38 @@
         </div>
         <br/><br/>
 
-        <div ng-show="controller.editMode">
+        <form ng-if="controller.editMode">
+
+            <strong>Blinds</strong>
+                <div ng-repeat="blind in controller.blinds">
+                    <div class="row">
+                        <div class="form-group col-sm-2">
+                            <label for="smallBlindInput">Small Blind</label>
+                            <input class="form-control" type="text" id="smallBlindInput" value="{{blind.smallBlind}}">
+                        </div>
+                        <div class="form-group col-sm-2">
+                            <label for="bigBlindInput">Big Blind</label>
+                            <input class="form-control" type="text" id="bigBlindInput" value="{{blind.bigBlind}}">
+                        </div>
+                        <div class="form-group col-sm-2">
+                            <label for="anteInput">Ante</label>
+                            <input class="form-control" type="text" id="anteInput" value="{{blind.ante}}">
+                        </div>
+                    </div>
+                </div>
+            <strong>Breaks</strong>
+            <div ng-repeat="aBreak in controller.breaks">
+            <div class="row">
+                <div class="form-group col-sm-2">
+                    <label for="afterLevelInput"></label>
+                    <input class="form-control" type="text" id="afterLevelInput" value="{{aBreak.afterLevelNumber}}">
+                </div>
+                <div class="form-group col-sm-2">
+                    <label for="lengthInput"></label>
+                    <input class="form-control" type="text" id="lengthInput" value="{{aBreak.length}}">
+                </div>
+            </div>
+        </div>
             <div class="row">
                 <div class="col-sm-2">
                     <paper-button label="Save" class="colored" ng-click="controller.saveSchedule()"></paper-button>
@@ -86,7 +117,7 @@
                     <paper-button label="Cancel" class="colored" ng-click="controller.cancelEdit()"></paper-button>
                 </div>
             </div>
-        </div>
+        </form>
 
         <div ng-hide="controller.editMode">
 
@@ -114,7 +145,7 @@
             </level>
 
 
-          <!-- controlls -->
+          <!-- controls -->
           <div ng-unless="controller.isSuddenDeath">
               <paper-button raisedbutton="true" class="colored paperButton mainButton" tabindex="1"
                             label="{{ controller.controlText }}"

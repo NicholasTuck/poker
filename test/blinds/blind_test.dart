@@ -1,3 +1,5 @@
+library BlindTest;
+
 import "package:unittest/unittest.dart";
 import "package:pokertimer/schedule/blinds/blind.dart";
 

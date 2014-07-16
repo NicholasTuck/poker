@@ -1,3 +1,5 @@
+library ChipTest;
+
 import "package:unittest/unittest.dart";
 import "package:pokertimer/chip/chip.dart";
 

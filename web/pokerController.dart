@@ -57,6 +57,9 @@ class PokerController {
     resetApp();
   }
 
+  List<Blind> get blinds => _schedule.blinds;
+  List<Break> get breaks => _schedule.breaks;
+
   String get controlText => isRunning ? "Pause" : "Play";
   Blind get currentBlind => _schedule.currentBlind;
   Blind get nextBlind => _schedule.nextBlind;
