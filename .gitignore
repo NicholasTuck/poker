@@ -19,3 +19,4 @@ build/*
 ###intelliJ###
 *.iml
 .idea/*
+atlassian-ide-plugin.xml

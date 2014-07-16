@@ -28,7 +28,10 @@ class Schedule{
     allBlinds.forEach((Map blindMap) => this.blinds.add(new Blind.fromMap(blindMap)));
 
     List allBreaks = scheduleMap['breaks'];
-    allBreaks.forEach((Map breakMap) => this.breaks.add(new Break.fromMap(breakMap)));
+    if(allBreaks != null) {
+      allBreaks.forEach((Map breakMap) => this.breaks.add(new Break.fromMap(breakMap)));
+    }
+
   }
 
   Map toMap(){

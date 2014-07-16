@@ -50,6 +50,7 @@ class ScheduleService {
 
     Map scheduleMap = schedule.toMap();
     String jsonString = JSON.encode(scheduleMap);
+    log.fine("Adding [${scheduleName}]");
 
     savedSchedulesReference.update({scheduleName: schedule.toMap()});
   }
