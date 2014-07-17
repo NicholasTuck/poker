@@ -46,7 +46,7 @@
                     <div class="col-sm-3">
                         <label for="scheduleNameDropDown">From Server</label>
                     </div>
-                    <div  class="col-sm-2">
+                    <div  class="col-sm-3">
                         <select class="form-control" ng-model="controller.selectedServerSchedule" id="scheduleNameDropDown" >
                             <option ng-repeat="scheduleName in controller.savedScheduleNames" ng-value="scheduleName">{{scheduleName}}</option>
                         </select>
@@ -60,17 +60,17 @@
                     <div class="col-sm-3">
                         <label for="saveScheduleAsName">Save Current Schedule as</label>
                     </div>
-                    <div class="col-sm-2">
+                    <div class="col-sm-3">
                         <!--                    <paper-input id="scheduleNameInput" floatingLabel="true" label="Save Current Schedule as..." ng-model="controller.nameToSaveScheduleAs"></paper-input> -->
                         <input class="form-control" type="text" ng-model="controller.nameToSaveScheduleAs" id="saveScheduleAsName">
                     </div>
                     <div class="col-sm-2">
-                        <paper-button label="Save" class="colored" ng-disabled="controller.disableSaveToServerButton()" ng-click="controller.saveScheduleToServer()"></paper-button>
+                        <paper-button label="Save" class="colored" ng-disabled="controller.disableSaveToServerButton()" ng-click="controller.saveScheduleToServer(controller.nameToSaveScheduleAs)"></paper-button>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-2">
-                        <paper-button label="Edit" class="colored" ng-click="controller.editSchedule()"></paper-button>
+                        <paper-button label="Edit" class="colored" ng-disabled="controller.scheduleIsNotEditable()" ng-click="controller.editSchedule()"></paper-button>
                     </div>
                 </div>
             </div>
@@ -79,20 +79,21 @@
 
         <form ng-if="controller.editMode">
 
+            <h2 class="text-danger">Editing Schedule: {{controller.loadedScheduleName}}</h2>
             <strong>Blinds</strong>
                 <div ng-repeat="blind in controller.blinds">
                     <div class="row">
                         <div class="form-group col-sm-2">
                             <label for="smallBlindInput">Small Blind</label>
-                            <input class="form-control" type="text" id="smallBlindInput" value="{{blind.smallBlind}}">
+                            <input class="form-control" type="text" id="smallBlindInput" ng-model="controller.blinds[$index].smallBlind">
                         </div>
                         <div class="form-group col-sm-2">
                             <label for="bigBlindInput">Big Blind</label>
-                            <input class="form-control" type="text" id="bigBlindInput" value="{{blind.bigBlind}}">
+                            <input class="form-control" type="text" id="bigBlindInput" ng-model="controller.blinds[$index].bigBlind">
                         </div>
                         <div class="form-group col-sm-2">
                             <label for="anteInput">Ante</label>
-                            <input class="form-control" type="text" id="anteInput" value="{{blind.ante}}">
+                            <input class="form-control" type="text" id="anteInput" ng-model="controller.blinds[$index].ante">
                         </div>
                     </div>
                 </div>
@@ -100,12 +101,12 @@
             <div ng-repeat="aBreak in controller.breaks">
             <div class="row">
                 <div class="form-group col-sm-2">
-                    <label for="afterLevelInput"></label>
-                    <input class="form-control" type="text" id="afterLevelInput" value="{{aBreak.afterLevelNumber}}">
+                    <label for="afterLevelInput">After Level Number</label>
+                    <input class="form-control" type="text" id="afterLevelInput" ng-model="controller.breaks[$index].afterLevelNumber">
                 </div>
                 <div class="form-group col-sm-2">
-                    <label for="lengthInput"></label>
-                    <input class="form-control" type="text" id="lengthInput" value="{{aBreak.length}}">
+                    <label for="lengthInput">Length</label>
+                    <input class="form-control" type="text" id="lengthInput" ng-model="controller.breaks[$index].length">
                 </div>
             </div>
         </div>

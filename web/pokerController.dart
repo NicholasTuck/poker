@@ -9,6 +9,7 @@ import 'package:logging/logging.dart';
 //import 'package:paper_elements/paper_button.dart';
 
 import 'dart:html';
+import 'dart:convert';
 
 @Controller(
     selector: '[poker-controller]',
@@ -20,6 +21,7 @@ class PokerController {
 
   static final Logger log = new Logger("PokerController");
   static const bool DEBUGGING = true;
+  static const String _DEFAULT_SCHEDULE_NAME = 'Default Schedule';
   ScheduleService _scheduleService;
   ScheduleModel _scheduleModel;
 
@@ -28,11 +30,11 @@ class PokerController {
 
   bool isSuddenDeath = false;
   Schedule _schedule;
-  String _loadedScheduleName = "Default Schedule";
-
+  String _loadedScheduleName = _DEFAULT_SCHEDULE_NAME;
+  String get loadedScheduleName => _loadedScheduleName;
 
   String selectedServerSchedule;
-  String nameToSaveScheduleAs;
+  String nameToSaveScheduleAs = '';
   List<String> savedScheduleNames = [];
 
   List<Chip> chips = new List<Chip>()
@@ -115,8 +117,6 @@ class PokerController {
     isSuddenDeath = true;
   }
 
-
-
   void resetApp() {
     isRunning = false;
     _schedule.reset();
@@ -136,14 +136,18 @@ class PokerController {
     if (files.length == 1) {
       File file = files[0];
       final reader = new FileReader();
-      reader.onLoadEnd.listen((value) => parseData(reader.result));
+      //todo this needs some work, firebase doesn't allow certain characters. Just stripping extension right now.
+      String scheduleName = file.name.substring(0,file.name.lastIndexOf('.'));
+      reader.onLoadEnd.listen((value) => parseData(reader.result, scheduleName));
       reader.readAsText(file);
     }
     uploadInput.value = null;
   }
 
-  void parseData(var result) {
-    _schedule = new Schedule.fromMap(result);
+  void parseData(String scheduleJson, String scheduleName) {
+    Map scheduleMap = JSON.decode(scheduleJson);
+    _schedule = new Schedule.fromMap(scheduleMap);
+    _loadedScheduleName = scheduleName;
     resetApp();
   }
 
@@ -152,33 +156,44 @@ class PokerController {
   }
 
   bool disableSaveToServerButton() {
-    return nameToSaveScheduleAs == null || nameToSaveScheduleAs == "" || _schedule == null;
+    return nameToSaveScheduleAs == "" || _schedule == null  || nameToSaveScheduleAs == _DEFAULT_SCHEDULE_NAME;
   }
 
-  void saveScheduleToServer() {
-    _scheduleService.saveSchedule(nameToSaveScheduleAs, _schedule);
+  void saveScheduleToServer(String scheduleName) {
+    _scheduleService.saveSchedule(scheduleName, _schedule);
   }
 
   void loadScheduleFromServer() {
     Schedule scheduleFromServer = _scheduleService.retrieveSchedule(selectedServerSchedule);
     if(scheduleFromServer != null){
       _scheduleModel.schedule = scheduleFromServer;
+      _loadedScheduleName = selectedServerSchedule;
     }
   }
 
+  bool scheduleIsNotEditable() {
+    return _loadedScheduleName == _DEFAULT_SCHEDULE_NAME;
+  }
+
   void editSchedule(){
-    log.fine("Editing schedule.");
+    log.fine("Editing schedule: [$_loadedScheduleName]");
     editMode = true;
   }
 
   void cancelEdit(){
-    log.fine("Edit cancelled.");
+    log.fine("Edit of [$_loadedScheduleName] cancelled.");
     editMode = false;
   }
 
   void saveSchedule(){
-    log.fine("Saving schedule.");
-    saveScheduleToServer();
-    editMode = false;
+    if(_loadedScheduleName != _DEFAULT_SCHEDULE_NAME){
+      log.fine('Saving schedule: [$_loadedScheduleName]');
+      saveScheduleToServer(_loadedScheduleName);
+      editMode = false;
+
+    } else {
+      log.warning('Cannot overwrite $_DEFAULT_SCHEDULE_NAME');
+      cancelEdit();
+    }
   }
 }

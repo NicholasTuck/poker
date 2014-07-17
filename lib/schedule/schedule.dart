@@ -22,16 +22,15 @@ class Schedule{
 
     blinds = new List<Blind>();
     breaks = new List<Break>();
-    levelLength = scheduleMap['levelLength'];
 
     List allBlinds = scheduleMap['blinds'];
     allBlinds.forEach((Map blindMap) => this.blinds.add(new Blind.fromMap(blindMap)));
+    levelLength = blinds.length;
 
     List allBreaks = scheduleMap['breaks'];
     if(allBreaks != null) {
       allBreaks.forEach((Map breakMap) => this.breaks.add(new Break.fromMap(breakMap)));
     }
-
   }
 
   Map toMap(){
