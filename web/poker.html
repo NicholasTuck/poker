@@ -95,6 +95,12 @@
                             <label for="anteInput">Ante</label>
                             <input class="form-control" type="text" id="anteInput" ng-model="controller.blinds[$index].ante">
                         </div>
+                        <div class="col-sm-1">
+                            <paper-button label="+" class="colored" ng-click="controller.addBlind($index)"></paper-button>
+                        </div>
+                        <div class="col-sm-1">
+                            <paper-button label="-" class="colored" ng-click="controller.removeBlind($index)"></paper-button>
+                        </div>
                     </div>
                 </div>
             <strong>Breaks</strong>
@@ -107,6 +113,12 @@
                 <div class="form-group col-sm-2">
                     <label for="lengthInput">Length</label>
                     <input class="form-control" type="text" id="lengthInput" ng-model="controller.breaks[$index].length">
+                </div>
+                <div class="col-sm-1">
+                    <paper-button label="+" class="colored" ng-click="controller.addBreak($index)"></paper-button>
+                </div>
+                <div class="col-sm-1">
+                    <paper-button label="-" class="colored" ng-click="controller.removeBreak($index)"></paper-button>
                 </div>
             </div>
         </div>

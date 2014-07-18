@@ -196,4 +196,20 @@ class PokerController {
       cancelEdit();
     }
   }
+
+  void addBlind(int index){
+    _schedule.blinds.insert(index, new Blind.blindsOnly(0,0));
+  }
+
+  void removeBlind(int index){
+    _schedule.blinds.removeAt(index);
+  }
+
+  void addBreak(int index){
+    _schedule.breaks.insert(index, new Break.initial());
+  }
+
+  void removeBreak(int index) {
+    _schedule.breaks.removeAt(index);
+  }
 }
