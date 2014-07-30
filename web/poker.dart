@@ -8,8 +8,8 @@ import 'package:pokertimer/countdown/countdown.dart';
 import 'package:pokertimer/schedule/saved/scheduleService.dart';
 import 'package:pokertimer/schedule/ScheduleModel.dart';
 import 'package:pokertimer/schedule/level/LevelComponent.dart';
-import 'dart:html';
-
+import 'package:pokertimer/admin/AdminComponent.dart';
+import 'package:pokertimer/session/SessionModel.dart';
 import 'pokerController.dart';
 
 void main() {
@@ -23,12 +23,14 @@ void main() {
 
 class PokerModule extends Module {
   PokerModule() {
-    type(PokerController);
-    type(CountdownController);
-    type(BlindController);
-    type(ChipController);
-    type(ScheduleService);
-    type(LevelComponent);
+    bind(PokerController);
+    bind(CountdownController);
+    bind(BlindController);
+    bind(ChipController);
+    bind(ScheduleService);
+    bind(LevelComponent);
+    bind(AdminComponent);
+    bind(SessionModel);
 
     bind(ScheduleModel);
   }

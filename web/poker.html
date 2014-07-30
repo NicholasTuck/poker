@@ -27,111 +27,6 @@
         <audio id="timer-alert" src="audio/Alarm-Positive.wav" preload="auto"></audio>
 
 
-        <!-- Maybe admin area can be it's own component ?? -->
-        <div ng-hide="controller.editMode" style="margin-left:5px;">
-            <div style="text-align:left;">
-                <a ng-click="controller.toggleAdminArea()" style="color: #F1D129;" href="#">Administration</a>
-            </div>
-            <div id="adminArea" hidden style="text-align: left;">
-
-                <!-- need to try to hide this and add our own button:
-                http://www.shauninman.com/archive/2007/09/10/styling_file_inputs_with_css_and_the_dom
-                http://stackoverflow.com/questions/3956286/how-to-remove-text-field-from-html-file-input
-                -->
-                <h2>Import Schedule</h2>
-                <div>
-                    From File: <input type="file" id="upload" ng-change="controller.onFileLoad()"/>
-                </div>
-                <div class="row" ng-unless="controller.noAvailableSchedules()">
-                    <div class="col-sm-3">
-                        <label for="scheduleNameDropDown">From Server</label>
-                    </div>
-                    <div  class="col-sm-3">
-                        <select class="form-control" ng-model="controller.selectedServerSchedule" id="scheduleNameDropDown" >
-                            <option ng-repeat="scheduleName in controller.savedScheduleNames" ng-value="scheduleName">{{scheduleName}}</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-2">
-                        <paper-button label="load" class="colored" ng-click="controller.loadScheduleFromServer()"></paper-button>
-                    </div>
-                </div>
-                <br/>
-                <div class="row">
-                    <div class="col-sm-3">
-                        <label for="saveScheduleAsName">Save Current Schedule as</label>
-                    </div>
-                    <div class="col-sm-3">
-                        <!--                    <paper-input id="scheduleNameInput" floatingLabel="true" label="Save Current Schedule as..." ng-model="controller.nameToSaveScheduleAs"></paper-input> -->
-                        <input class="form-control" type="text" ng-model="controller.nameToSaveScheduleAs" id="saveScheduleAsName">
-                    </div>
-                    <div class="col-sm-2">
-                        <paper-button label="Save" class="colored" ng-disabled="controller.disableSaveToServerButton()" ng-click="controller.saveScheduleToServer(controller.nameToSaveScheduleAs)"></paper-button>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-2">
-                        <paper-button label="Edit" class="colored" ng-disabled="controller.scheduleIsNotEditable()" ng-click="controller.editSchedule()"></paper-button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <br/><br/>
-
-        <form ng-if="controller.editMode">
-
-            <h2 class="text-danger">Editing Schedule: {{controller.loadedScheduleName}}</h2>
-            <strong>Blinds</strong>
-                <div ng-repeat="blind in controller.blinds">
-                    <div class="row">
-                        <div class="form-group col-sm-2">
-                            <label for="smallBlindInput">Small Blind</label>
-                            <input class="form-control" type="text" id="smallBlindInput" ng-model="controller.blinds[$index].smallBlind">
-                        </div>
-                        <div class="form-group col-sm-2">
-                            <label for="bigBlindInput">Big Blind</label>
-                            <input class="form-control" type="text" id="bigBlindInput" ng-model="controller.blinds[$index].bigBlind">
-                        </div>
-                        <div class="form-group col-sm-2">
-                            <label for="anteInput">Ante</label>
-                            <input class="form-control" type="text" id="anteInput" ng-model="controller.blinds[$index].ante">
-                        </div>
-                        <div class="col-sm-1">
-                            <paper-button label="+" class="colored" ng-click="controller.addBlind($index)"></paper-button>
-                        </div>
-                        <div class="col-sm-1">
-                            <paper-button label="-" class="colored" ng-click="controller.removeBlind($index)"></paper-button>
-                        </div>
-                    </div>
-                </div>
-            <strong>Breaks</strong>
-            <div ng-repeat="aBreak in controller.breaks">
-            <div class="row">
-                <div class="form-group col-sm-2">
-                    <label for="afterLevelInput">After Level Number</label>
-                    <input class="form-control" type="text" id="afterLevelInput" ng-model="controller.breaks[$index].afterLevelNumber">
-                </div>
-                <div class="form-group col-sm-2">
-                    <label for="lengthInput">Length</label>
-                    <input class="form-control" type="text" id="lengthInput" ng-model="controller.breaks[$index].length">
-                </div>
-                <div class="col-sm-1">
-                    <paper-button label="+" class="colored" ng-click="controller.addBreak($index)"></paper-button>
-                </div>
-                <div class="col-sm-1">
-                    <paper-button label="-" class="colored" ng-click="controller.removeBreak($index)"></paper-button>
-                </div>
-            </div>
-        </div>
-            <div class="row">
-                <div class="col-sm-2">
-                    <paper-button label="Save" class="colored" ng-click="controller.saveSchedule()"></paper-button>
-                </div>
-                <div class="col-sm-2">
-                    <paper-button label="Cancel" class="colored" ng-click="controller.cancelEdit()"></paper-button>
-                </div>
-            </div>
-        </form>
-
         <div ng-hide="controller.editMode">
 
 
@@ -177,7 +72,7 @@
           </div>
       </div>
 
-
+      <poker-admin></poker-admin>
       <br /><br />
       <div id="title">Blind Supervision</div>
     </div>

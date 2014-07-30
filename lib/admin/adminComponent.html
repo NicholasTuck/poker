@@ -1,0 +1,104 @@
+<!-- Maybe admin area can be it's own component ?? -->
+<div ng-hide="cmp.editMode" style="margin-left:5px;">
+    <div style="text-align:left;">
+        <a ng-click="cmp.toggleAdminArea()" style="color: #F1D129;" href="#">Administration</a>
+    </div>
+    <div id="adminArea" ng-show="cmp.showAdminArea" style="text-align: left;">
+
+        <!-- need to try to hide this and add our own button:
+        http://www.shauninman.com/archive/2007/09/10/styling_file_inputs_with_css_and_the_dom
+        http://stackoverflow.com/questions/3956286/how-to-remove-text-field-from-html-file-input
+        -->
+        <h2>Import Schedule</h2>
+        <div>
+            From File: <input type="file" id="upload" ng-change="cmp.onFileLoad()"/>
+        </div>
+        <div class="row" ng-unless="cmp.noAvailableSchedules()">
+            <div class="col-sm-3">
+                <label for="scheduleNameDropDown">From Server</label>
+            </div>
+            <div  class="col-sm-3">
+                <select class="form-control" ng-model="cmp.selectedServerSchedule" id="scheduleNameDropDown" >
+                    <option ng-repeat="scheduleName in cmp.savedScheduleNames" ng-value="scheduleName">{{scheduleName}}</option>
+                </select>
+            </div>
+            <div class="col-sm-2">
+                <paper-button label="load" class="colored" ng-click="cmp.loadScheduleFromServer()"></paper-button>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-sm-3">
+                <label for="saveScheduleAsName">Save Current Schedule as</label>
+            </div>
+            <div class="col-sm-3">
+                <!--                    <paper-input id="scheduleNameInput" floatingLabel="true" label="Save Current Schedule as..." ng-model="cmp.nameToSaveScheduleAs"></paper-input> -->
+                <input class="form-control" type="text" ng-model="cmp.nameToSaveScheduleAs" id="saveScheduleAsName">
+            </div>
+            <div class="col-sm-2">
+                <paper-button label="Save" class="colored" ng-disabled="cmp.disableSaveToServerButton()" ng-click="cmp.saveScheduleToServer(cmp.nameToSaveScheduleAs)"></paper-button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <paper-button label="Edit" class="colored" ng-disabled="cmp.scheduleIsNotEditable()" ng-click="cmp.editSchedule()"></paper-button>
+            </div>
+        </div>
+    </div>
+</div>
+<br/><br/>
+
+<form ng-if="cmp.editMode">
+
+    <h2 class="text-danger">Editing Schedule: {{cmp.loadedScheduleName}}</h2>
+    <strong>Blinds</strong>
+    <div ng-repeat="blind in cmp.blinds">
+        <div class="row">
+            <div class="form-group col-sm-2">
+                <label for="smallBlindInput">Small Blind</label>
+                <input class="form-control" type="text" id="smallBlindInput" ng-model="cmp.blinds[$index].smallBlind">
+            </div>
+            <div class="form-group col-sm-2">
+                <label for="bigBlindInput">Big Blind</label>
+                <input class="form-control" type="text" id="bigBlindInput" ng-model="cmp.blinds[$index].bigBlind">
+            </div>
+            <div class="form-group col-sm-2">
+                <label for="anteInput">Ante</label>
+                <input class="form-control" type="text" id="anteInput" ng-model="cmp.blinds[$index].ante">
+            </div>
+            <div class="col-sm-1">
+                <paper-button label="+" class="colored" ng-click="cmp.addBlind($index)"></paper-button>
+            </div>
+            <div class="col-sm-1">
+                <paper-button label="-" class="colored" ng-click="cmp.removeBlind($index)"></paper-button>
+            </div>
+        </div>
+    </div>
+    <strong>Breaks</strong>
+    <div ng-repeat="aBreak in cmp.breaks">
+        <div class="row">
+            <div class="form-group col-sm-2">
+                <label for="afterLevelInput">After Level Number</label>
+                <input class="form-control" type="text" id="afterLevelInput" ng-model="cmp.breaks[$index].afterLevelNumber">
+            </div>
+            <div class="form-group col-sm-2">
+                <label for="lengthInput">Length</label>
+                <input class="form-control" type="text" id="lengthInput" ng-model="cmp.breaks[$index].length">
+            </div>
+            <div class="col-sm-1">
+                <paper-button label="+" class="colored" ng-click="cmp.addBreak($index)"></paper-button>
+            </div>
+            <div class="col-sm-1">
+                <paper-button label="-" class="colored" ng-click="cmp.removeBreak($index)"></paper-button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            <paper-button label="Save" class="colored" ng-click="cmp.saveSchedule()"></paper-button>
+        </div>
+        <div class="col-sm-2">
+            <paper-button label="Cancel" class="colored" ng-click="cmp.cancelEdit()"></paper-button>
+        </div>
+    </div>
+</form>
