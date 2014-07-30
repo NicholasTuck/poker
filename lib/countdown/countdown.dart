@@ -4,7 +4,7 @@ import 'package:angular/angular.dart';
 import 'dart:async';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
-import 'dart:core';
+import 'package:pokertimer/session/SessionModel.dart';
 
 @Component(
     selector: 'countdown',
@@ -34,14 +34,14 @@ class CountdownController {
   static const double DANGER_PERCENTAGE = 0.9;
 
   Scope _scope;
+  SessionModel _sessionModel;
   Stopwatch _stopWatch = new Stopwatch();
   Duration _startingDuration;
-  Duration _timeRemaining;
 
   String colorClass;
   Function countdownCompleteCallback;
 
-  CountdownController(Scope this._scope) {
+  CountdownController(Scope this._scope, SessionModel this._sessionModel) {
     new Timer.periodic(new Duration(seconds:1), _updateTimeRemaining);
 
     _scope.on("resetCountdown").listen((_) => resetCountdown());
@@ -51,6 +51,9 @@ class CountdownController {
   set startTime (int time) {
     initializeCountdown(time);
   }
+
+  Duration get _timeRemaining => _sessionModel.timeRemainingInCurrentLevel;
+  set _timeRemaining(Duration duration) { _sessionModel.timeRemainingInCurrentLevel = duration; }
 
   void initializeCountdown(int startTime) {
     _startingDuration = new Duration(minutes:startTime);

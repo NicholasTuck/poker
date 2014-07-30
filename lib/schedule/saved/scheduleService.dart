@@ -1,8 +1,6 @@
 library scheduleService;
 
 import 'dart:async';
-import 'dart:html' hide Event;
-import 'dart:convert';
 import 'package:firebase/firebase.dart' ;
 import 'package:pokertimer/schedule/schedule.dart';
 import 'package:di/annotations.dart';
@@ -49,7 +47,6 @@ class ScheduleService {
     authenticateFirebase(savedSchedulesReference);
 
     Map scheduleMap = schedule.toMap();
-    String jsonString = JSON.encode(scheduleMap);
     log.fine("Adding [${scheduleName}]");
 
     savedSchedulesReference.update({scheduleName: schedule.toMap()});

@@ -3,7 +3,7 @@ library poker_timer.schedule.ScheduleModel;
 import 'package:angular/angular.dart';
 import 'schedule.dart';
 import 'blinds/blind.dart';
-import 'break.dart';
+import 'break/break.dart';
 
 const String NEW_SCHEDULE_LOADED_EVENT = 'ScheduleModel:NEW_SCHEDULE_LOADED';
 const String NEXT_EVENT_STARTED = 'ScheduleModel:NEXT_EVENT_STARTED';

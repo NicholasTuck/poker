@@ -2,7 +2,7 @@ library admin.AdminComponent;
 
 import "../session/SessionModel.dart";
 import "../schedule/blinds/blind.dart";
-import "../schedule/break.dart";
+import '../schedule/break/break.dart';
 import "../schedule/schedule.dart";
 import "../schedule/ScheduleModel.dart";
 import "../schedule/saved/scheduleService.dart";

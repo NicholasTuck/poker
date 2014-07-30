@@ -10,6 +10,7 @@ import 'package:pokertimer/schedule/ScheduleModel.dart';
 import 'package:pokertimer/schedule/level/LevelComponent.dart';
 import 'package:pokertimer/admin/AdminComponent.dart';
 import 'package:pokertimer/session/SessionModel.dart';
+import 'package:pokertimer/schedule/break/NextBreakComponent.dart';
 import 'pokerController.dart';
 
 void main() {
@@ -31,7 +32,7 @@ class PokerModule extends Module {
     bind(LevelComponent);
     bind(AdminComponent);
     bind(SessionModel);
-
+    bind(NextBreakComponent);
     bind(ScheduleModel);
   }
 }

@@ -6,6 +6,7 @@ import "package:angular/angular.dart";
 class SessionModel {
 
   bool editMode = false;
+  Duration timeRemainingInCurrentLevel = new Duration(seconds: 0);
 
   SessionModel() {
   }

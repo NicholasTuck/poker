@@ -1,7 +1,7 @@
 import 'package:angular/angular.dart';
 import 'package:pokertimer/chip/chip.dart';
 import 'package:pokertimer/schedule/blinds/blind.dart';
-import 'package:pokertimer/schedule/break.dart';
+import 'package:pokertimer/schedule/break/break.dart';
 import 'package:pokertimer/schedule/schedule.dart';
 import 'package:pokertimer/schedule/ScheduleModel.dart';
 import 'package:pokertimer/session/SessionModel.dart';
