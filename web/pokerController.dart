@@ -31,7 +31,8 @@ class PokerController {
   List<Chip> chips = new List<Chip>()
     ..add(new Chip(value: 5, color: "Red"))
     ..add(new Chip(value: 25, color: "Green"))
-    ..add(new Chip(value: 100, color: "Black"));
+    ..add(new Chip(value: 100, color: "Black"))
+    ..add(new Chip(value: 500, color: "Purple"));
 
   PokerController(Scope this._scope, this._rootScope, ScheduleModel this._scheduleModel, SessionModel this._sessionModel) {
     _rootScope.on(NEW_SCHEDULE_LOADED_EVENT).listen((ScopeEvent event) => loadSchedule(event.data as Schedule));
@@ -93,6 +94,11 @@ class PokerController {
   bool get isLastLevel => _schedule.currentBlindNumber == (_schedule.blinds.length - 1);
 
   void resetLevel() {_scope.broadcast("resetCountdown");}
+
+  void skipLevel() {
+    _scheduleModel.completeCurrentLevel();
+//    _scope.broadcast("resetCountdown");
+  }
 
   void onTimerToggled(ScopeEvent scopeEvent, bool toggledOn) {isRunning = toggledOn;}
 

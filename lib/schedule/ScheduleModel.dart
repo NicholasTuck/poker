@@ -20,18 +20,27 @@ class ScheduleModel {
   ScheduleModel(RootScope this._rootScope) {
 
     List<Blind> blinds = new List<Blind>()
+      ..add(new Blind.blindsOnly(10, 20))
+      ..add(new Blind.blindsOnly(15, 30))
+      ..add(new Blind.blindsOnly(20, 40))
       ..add(new Blind.blindsOnly(25, 50))
-      ..add(new Blind.anteOnly(100))
-      ..add(new Blind(75, 150, 50))
+      ..add(new Blind.blindsOnly(50, 100))
+      ..add(new Blind.blindsOnly(75, 150))
       ..add(new Blind.blindsOnly(100, 200))
+      ..add(new Blind.blindsOnly(150, 300))
       ..add(new Blind.blindsOnly(200, 400))
+      ..add(new Blind.blindsOnly(300, 600))
+      ..add(new Blind.blindsOnly(400, 800))
       ..add(new Blind.blindsOnly(500, 1000))
+      ..add(new Blind.blindsOnly(600, 1200))
+      ..add(new Blind.blindsOnly(800, 1600))
       ..add(new Blind.blindsOnly(1000, 2000));
 
     List<Break> breaks = new List<Break>()
-      ..add(new Break(2, 5))
-      ..add(new Break(4, 5))
-      ..add(new Break(6, 10));
+      ..add(new Break(3, 10))
+      ..add(new Break(6, 10))
+      ..add(new Break(9, 10))
+      ..add(new Break(12, 10));
 
     _schedule = new Schedule(blinds, breaks);
 

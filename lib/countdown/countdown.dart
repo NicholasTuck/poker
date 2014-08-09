@@ -17,7 +17,7 @@ import 'package:pokertimer/session/SessionModel.dart';
       'on-countdown-complete' : '&countdownCompleteCallback'
     })
 class CountdownController {
-  static const DEBUGGING = true;
+  static const DEBUGGING = false;
   static const DEBUGGING_WARNING_SECONDS = 1;
   static const DEBUGGING_DANGER_SECONDS = 3;
   static const DEBUGGING_EXPIRED_SECONDS = 5;
@@ -30,8 +30,8 @@ class CountdownController {
   static const String NORMAL_COLOR_CLASS = "normal";
   static const String WARNING_COLOR_CLASS = "warning";
   static const String DANGER_COLOR_CLASS = "danger";
-  static const double WARNING_PERCENTAGE = 0.7;
-  static const double DANGER_PERCENTAGE = 0.9;
+  static const double WARNING_PERCENTAGE = 0.3;
+  static const double DANGER_PERCENTAGE = 0.1;
 
   Scope _scope;
   SessionModel _sessionModel;
