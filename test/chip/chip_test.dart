@@ -8,7 +8,6 @@ main() {
     Chip chip = new Chip(value: 5, color: "Red");
     expect(chip.value, equals(5));
     expect(chip.color, equals("Red"));
-    expect(chip.image, isNull);
   });
   
 }
