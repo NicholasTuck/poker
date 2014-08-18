@@ -1,19 +1,11 @@
-<div chip-controller style="height:100%;" >
-  <div id="chips" class="border">
-    <table>
-      <tr>
-        <td>Red </td>
-        <td>Green </td>
-        <td>Black </td>
-        <td>Purple </td>
-      </tr>
-      <tr>
-        <td>5 </td>
-        <td>25 </td>
-        <td>100 </td>
-        <td>500 </td>
-      </tr>
-    </table>
-  
-  <div style="clear:both;"></div>
+<div chip-controller style="height:100%;">
+    <div id="chips" class="border">
+        <div class="pokerchip flat"
+             ng-repeat="chip in cmp.chips"
+             ng-style="{background: chip.color}"
+             ng-class="chip.color">
+
+            <div class="chipValue" ng-class="chip.color">{{chip.value}}</div>
+        </div>
+    </div>
 </div>

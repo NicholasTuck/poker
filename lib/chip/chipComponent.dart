@@ -15,8 +15,7 @@ class ChipComponent {
   static final Logger log = new Logger("ChipComponent");
   @NgOneWay('chips') List<Chip> chips;
 
-  ChipComponent() { }
-
-
+  ChipComponent() {
+  }
 
 }

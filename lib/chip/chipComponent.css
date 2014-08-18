@@ -1,27 +1,61 @@
-#chip {
-  height: 100%;
-}
-
 #chips {
-  margin: 0 auto;
-  min-width: 150px;
-  height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    width: 100%;
 }
 
-.border {
-  border-color: white;
-  border-style: solid;
-  border-width: 1px;
-  border-top: none;
-  border-bottom: none;
+.chipValue {
+    font-size: 1.7em;
+    font-weight: bold;
 }
 
-table {
-  margin: 0 auto;
+.chipValue.white {
+    color: black;
 }
 
-td {
-  font-size: 3em;
-  line-height: 1.2em;
-  font-weight: bold;
+.pokerchip{
+    font-size:1.2em;
+    position:relative;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    box-sizing:border-box;
+    width:5em;
+    height:5em;
+    background:#555;
+    border-radius:50%;
+    border:.5em dashed white;
+    transition:all .5s ease;
+    backface-visibility:hidden;
+}
+
+.pokerchip.white {
+    border:.5em dashed black;
+}
+
+.pokerchip.flat{
+    box-shadow:0 0 0 .2em #fff;
+}
+
+.pokerchip.iso{
+    transform: perspective(3000px) rotateX(55deg) rotateZ(-40deg);
+    box-shadow:
+    -1px 1px 0 #555,
+    -2px 2px 0 #555,
+    -3px 3px 0 #555,
+    -4px 4px 0 #555,
+    -5px 5px 0 #555,
+    -6px 6px 10px #555;
+}
+
+.pokerchip.flat:hover{
+    transform:rotate(90deg);
+}
+
+.pokerchip.iso:hover{
+    transform: perspective(3000px) rotateX(55deg) rotateZ(-40deg) translateZ(.5em);
 }

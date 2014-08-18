@@ -29,10 +29,11 @@ class PokerController {
   Schedule _schedule;
 
   List<Chip> chips = new List<Chip>()
-    ..add(new Chip(value: 5, color: "Red"))
-    ..add(new Chip(value: 25, color: "Green"))
-    ..add(new Chip(value: 100, color: "Black"))
-    ..add(new Chip(value: 500, color: "Purple"));
+    ..add(new Chip(value: 5, color: "red"))
+    ..add(new Chip(value: 10, color: "white"))
+    ..add(new Chip(value: 25, color: "green"))
+    ..add(new Chip(value: 100, color: "black"))
+    ..add(new Chip(value: 500, color: "purple"));
 
   PokerController(Scope this._scope, this._rootScope, ScheduleModel this._scheduleModel, SessionModel this._sessionModel) {
     _rootScope.on(NEW_SCHEDULE_LOADED_EVENT).listen((ScopeEvent event) => loadSchedule(event.data as Schedule));
