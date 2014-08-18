@@ -3,7 +3,8 @@ library chip;
 class Chip {
   int value;
   String color;
-  var image;
+  bool hide = false;
+  bool colorUp = false;
   
-  Chip({this.value, this.color, this.image});
+  Chip({this.value, this.color});
 }
