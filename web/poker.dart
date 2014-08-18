@@ -27,7 +27,7 @@ class PokerModule extends Module {
     bind(PokerController);
     bind(CountdownController);
     bind(BlindController);
-    bind(ChipController);
+    bind(ChipComponent);
     bind(ScheduleService);
     bind(LevelComponent);
     bind(AdminComponent);

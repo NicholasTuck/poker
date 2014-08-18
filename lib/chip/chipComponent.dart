@@ -9,15 +9,14 @@ import 'chip.dart';
     selector: 'chip',
     templateUrl: 'packages/pokertimer/chip/chipComponent.html',
     cssUrl: 'packages/pokertimer/chip/chipComponent.css',
-    publishAs: 'controller',
-    map: const {
-        'chip' : '=>chip'
-      })
+    publishAs: 'cmp')
 
-class ChipController {
-  static final Logger log = new Logger("ChipController");
-  Chip chip;
+class ChipComponent {
+  static final Logger log = new Logger("ChipComponent");
+  @NgOneWay('chips') List<Chip> chips;
 
-  ChipController() { }
+  ChipComponent() { }
+
+
 
 }

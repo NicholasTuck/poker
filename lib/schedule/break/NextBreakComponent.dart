@@ -14,9 +14,6 @@ import "../../schedule/schedule.dart";
     cssUrl: 'packages/pokertimer/schedule/break/nextBreakComponent.css',
     publishAs: 'cmp')
 class NextBreakComponent {
-  static final DateTime TIME_ZERO = new DateTime.fromMillisecondsSinceEpoch(0);
-  static final DateFormat _formatter = new DateFormat.ms();
-
   SessionModel _sessionModel;
   ScheduleModel _scheduleModel;
 
@@ -28,10 +25,8 @@ class NextBreakComponent {
     if (_schedule.nextBreak == null) return "Never... Hold It!";
 
     int levelsRemaining = findNumberOfLevelsUntilNextBreak();
-    DateTime dateTimeUntilNextBreak = TIME_ZERO.add(new Duration(minutes: _schedule.levelLength * levelsRemaining));
-    dateTimeUntilNextBreak = dateTimeUntilNextBreak.add(_sessionModel.timeRemainingInCurrentLevel);
-
-    return _formatter.format(dateTimeUntilNextBreak);
+    Duration durationUntilNextBreak = new Duration(minutes: _schedule.levelLength * levelsRemaining) + _sessionModel.timeRemainingInCurrentLevel;
+    return formatDuration(durationUntilNextBreak);
   }
 
   int findNumberOfLevelsUntilNextBreak() {
@@ -41,5 +36,12 @@ class NextBreakComponent {
     } else {
       return 0;
     }
+  }
+
+  String formatDuration(Duration duration) {
+    String durationOutputString = duration.toString();
+    int beginningSubString = (duration.inHours > 0) ? 0 : 2;
+    int endingSubString = durationOutputString.length - 7;
+    return durationOutputString.substring(beginningSubString, endingSubString);
   }
 }
