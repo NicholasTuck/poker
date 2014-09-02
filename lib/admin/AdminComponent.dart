@@ -85,11 +85,12 @@ class AdminComponent {
   }
 
   void loadScheduleFromServer() {
-    Schedule scheduleFromServer = _scheduleService.retrieveSchedule(selectedServerSchedule);
-    if(scheduleFromServer != null){
-      _scheduleModel.schedule = scheduleFromServer;
-      _loadedScheduleName = selectedServerSchedule;
-    }
+    _scheduleService.retrieveSchedule(selectedServerSchedule).then((Schedule scheduleFromServer) {
+      if(scheduleFromServer != null){
+        _scheduleModel.schedule = scheduleFromServer;
+        _loadedScheduleName = selectedServerSchedule;
+      }
+    });
   }
 
   bool scheduleIsNotEditable() {

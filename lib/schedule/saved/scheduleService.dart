@@ -52,19 +52,17 @@ class ScheduleService {
     savedSchedulesReference.update({scheduleName: schedule.toMap()});
   }
 
-  Schedule retrieveSchedule(String scheduleName) {
+  Future<Schedule> retrieveSchedule(String scheduleName) {
     Firebase savedSchedulesReference = new Firebase("$_firebaseUrl/savedSchedules");
     authenticateFirebase(savedSchedulesReference);
 
-    var child = savedSchedulesReference.child(scheduleName);
+    Firebase child = savedSchedulesReference.child(scheduleName);
 
     log.fine("Retrieving [${child.name()}] from ${savedSchedulesReference.name()}");
 
-    child.onValue.forEach((Event event) {
+    return child.onValue.first.then((Event event) {
       var scheduleMap = event.snapshot.val();
-      newSchedule = new Schedule.fromMap(scheduleMap);
+      return new Schedule.fromMap(scheduleMap);
     });
-
-    return newSchedule;
   }
 }
