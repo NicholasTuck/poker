@@ -1,16 +1,14 @@
 <div chip-controller style="height:100%;">
     <div id="chips" class="border">
-        <div ng-repeat="chip in cmp.chips">
-            <div class="pokerchip flat"
-                 ng-if="!chip.hide"
-                 ng-style="{background: chip.color}"
-                 ng-class="chip.color">
+        <div ng-repeat="chip in cmp.filteredChipList"
+             class="pokerchip flat"
+             ng-style="{background: chip.color}"
+             ng-class="chip.color">
 
-                <div class="chipValue" ng-class="chip.color">{{chip.value}}</div>
+            <div class="chipValue" ng-class="chip.color">{{chip.value}}</div>
 
-                <div class="antiCricle" ng-if="chip.colorUp">
-                    <img src="images/antiCircle.png" width="100%" height="100%"/>
-                </div>
+            <div class="antiCricle" ng-if="chip.colorUp">
+                <img src="images/antiCircle.png" width="100%" height="100%"/>
             </div>
         </div>
     </div>

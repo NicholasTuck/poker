@@ -46,7 +46,9 @@ class ChipComponent {
       if (allBlindsDivisibleByChip) {
         for (int k = i - 1; k >= 0; k--) {
           Chip chipToEliminate = chips[k];
-          if (chipToEliminate.colorUp) chipToEliminate.hide = true;
+          if (chipToEliminate.colorUp) {
+            chipToEliminate.hide = true;
+          }
           chipToEliminate.colorUp = true;
         }
         break;
@@ -54,6 +56,10 @@ class ChipComponent {
 
     }
 
+  }
+
+  List<Chip> get filteredChipList {
+    return chips.where((Chip chip) => chip.hide == false);
   }
 
 }

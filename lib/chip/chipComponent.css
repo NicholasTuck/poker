@@ -33,6 +33,29 @@
     backface-visibility:hidden;
 }
 
+.pokerchip.ng-move, .pokerchip.ng-enter, .pokerchip.ng-leave {
+    -webkit-transition:all ease 1.3s;
+    transition:all ease 1.3s;
+}
+
+.pokerchip.ng-leave.ng-leave-active,
+.pokerchip.ng-move,
+.pokerchip.ng-enter {
+    margin-left: -1000px;
+    margin-right: 1000px;
+    transform:rotate(-390deg);
+}
+
+.pokerchip.ng-leave,
+.pokerchip.ng-move.ng-move-active,
+.pokerchip.ng-enter.ng-enter-active {
+    margin-left: 0;
+    margin-right: 0;
+    transform:rotate(90deg);
+}
+
+
+
 .pokerchip.white {
     border:.5em dashed black;
 }

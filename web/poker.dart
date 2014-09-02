@@ -1,6 +1,8 @@
 import 'package:di/di.dart';
 import 'package:angular/angular.dart';
 import 'package:angular/application_factory.dart';
+import 'package:angular/animate/module.dart';
+
 import 'package:logging/logging.dart';
 import 'package:pokertimer/schedule/blinds/blindComponent.dart';
 import 'package:pokertimer/chip/chipComponent.dart';
@@ -24,6 +26,7 @@ void main() {
 
 class PokerModule extends Module {
   PokerModule() {
+    install(new AnimationModule());
     bind(PokerController);
     bind(CountdownController);
     bind(BlindController);
