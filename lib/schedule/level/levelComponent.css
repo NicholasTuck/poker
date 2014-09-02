@@ -21,7 +21,8 @@ h1 {
 }
 
 .nextLevel {
-    width: 80%;
+    width: 60%;
+    opacity: .5;
 
     -webkit-border-radius: 15px 15px 0px 0px;
     -moz-border-radius: 15px 15px 0px 0px;
