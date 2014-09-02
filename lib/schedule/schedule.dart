@@ -2,6 +2,7 @@ library schedule;
 
 import 'package:pokertimer/schedule/blinds/blind.dart';
 import 'break/break.dart';
+import '../chip/chip.dart';
 
 class Schedule{
 
@@ -12,24 +13,34 @@ class Schedule{
   List<Break> breaks;
   int currentBreakNumber = -1;
 
+  List<Chip> chips;
+
   bool onBreak = false;
   
-  Schedule(this.blinds, this.breaks);
+  Schedule(this.blinds, this.breaks, this.chips);
   Schedule.blindsOnly(this.blinds): this.breaks = new List<Break>();
 
   Schedule.fromMap(Map scheduleMap){
 
-    blinds = new List<Blind>();
-    breaks = new List<Break>();
 
     levelLength = scheduleMap['levelLength'];
 
+    blinds = new List<Blind>();
     List allBlinds = scheduleMap['blinds'];
     allBlinds.forEach((Map blindMap) => this.blinds.add(new Blind.fromMap(blindMap)));
 
+    breaks = new List<Break>();
     List allBreaks = scheduleMap['breaks'];
     if(allBreaks != null) {
-      allBreaks.forEach((Map breakMap) => this.breaks.add(new Break.fromMap(breakMap)));
+      allBreaks.forEach((Map breakMap) => breaks.add(new Break.fromMap(breakMap)));
+    }
+
+    chips = new List<Chip>();
+    List allChips = scheduleMap['chips'];
+    if(allChips != null) {
+      allChips.forEach((Map chipMap) => chips.add(new Chip.fromMap(chipMap)));
+    } else {
+      chips = createDefaultChips();
     }
   }
 
@@ -40,9 +51,13 @@ class Schedule{
     List<Map> breakMapList = [];
     breaks.forEach((Break currentBreak) => breakMapList.add(currentBreak.toMap()));
 
+    List<Map> chipMapList = [];
+    chips.forEach((Chip currentChip) => chipMapList.add(currentChip.toMap()));
+
     return {'levelLength': levelLength,
-            'blinds':blindMapList,
-            'breaks':breakMapList
+            'blinds': blindMapList,
+            'breaks': breakMapList,
+            'chips': chipMapList
           };
   }
 
@@ -68,7 +83,17 @@ class Schedule{
       currentBreakNumber++;
       onBreak = true;
     }
-
   }
-  
+
+  static List<Chip> createDefaultChips() {
+    List<Chip> chips = new List<Chip>()
+      ..add(new Chip(value: 5, color: "red"))
+      ..add(new Chip(value: 10, color: "white"))
+      ..add(new Chip(value: 25, color: "green"))
+      ..add(new Chip(value: 100, color: "black"))
+      ..add(new Chip(value: 500, color: "purple"));
+    return chips;
+  }
+
+
 }

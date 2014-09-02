@@ -28,13 +28,6 @@ class PokerController {
 
   Schedule _schedule;
 
-  List<Chip> chips = new List<Chip>()
-    ..add(new Chip(value: 5, color: "red"))
-    ..add(new Chip(value: 10, color: "white"))
-    ..add(new Chip(value: 25, color: "green"))
-    ..add(new Chip(value: 100, color: "black"))
-    ..add(new Chip(value: 500, color: "purple"));
-
   PokerController(Scope this._scope, this._rootScope, ScheduleModel this._scheduleModel, SessionModel this._sessionModel) {
     _rootScope.on(NEW_SCHEDULE_LOADED_EVENT).listen((ScopeEvent event) => loadSchedule(event.data as Schedule));
     _rootScope.on(LEVEL_COMPLETED_EVENT).listen((_) => playAudio());
@@ -53,6 +46,7 @@ class PokerController {
 
   List<Blind> get blinds => _schedule.blinds;
   List<Break> get breaks => _schedule.breaks;
+  List<Chip> get chips => _schedule.chips;
 
   String get controlText => isRunning ? "Pause" : "Play";
   Blind get currentBlind => _schedule.currentBlind;

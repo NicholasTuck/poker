@@ -4,6 +4,7 @@ import 'package:angular/angular.dart';
 import 'schedule.dart';
 import 'blinds/blind.dart';
 import 'break/break.dart';
+import '../chip/chip.dart';
 
 const String NEW_SCHEDULE_LOADED_EVENT = 'ScheduleModel:NEW_SCHEDULE_LOADED';
 const String NEXT_EVENT_STARTED = 'ScheduleModel:NEXT_EVENT_STARTED';
@@ -42,7 +43,7 @@ class ScheduleModel {
       ..add(new Break(9, 10))
       ..add(new Break(12, 10));
 
-    _schedule = new Schedule(blinds, breaks);
+    _schedule = new Schedule(blinds, breaks, Schedule.createDefaultChips());
 
   }
 
