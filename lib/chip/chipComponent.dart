@@ -15,27 +15,28 @@ import 'chip.dart';
     publishAs: 'cmp')
 
 class ChipComponent {
+
   static final Logger log = new Logger("ChipComponent");
   @NgOneWay('chips') List<Chip> chips;
   ScheduleModel _scheduleModel;
   RootScope _rootScope;
 
   ChipComponent(RootScope this._rootScope, ScheduleModel this._scheduleModel) {
-    _rootScope.on(NEXT_EVENT_STARTED).listen((_) => nextLevelStarted());
+    _rootScope.on(NEXT_EVENT_STARTED).listen((_) => checkToColorUp());
 
   }
 
   Schedule get _schedule => _scheduleModel.schedule;
 
-  void nextLevelStarted() {
+  void checkToColorUp() {
     final int blindToStartFrom = (_schedule.onBreak) ? _schedule.currentBlindNumber + 1 : _schedule.currentBlindNumber;
 
-    for (int i = chips.length - 1; i >= 0; i--) {
-      Chip currentChip = chips[i];
+    for (int chipIndex = chips.length - 1; chipIndex >= 0; chipIndex--) {
+      Chip currentChip = chips[chipIndex];
       bool allBlindsDivisibleByChip = true;
 
-      for (int j = blindToStartFrom; j < _schedule.blinds.length; j++) {
-        Blind currentBlind = _schedule.blinds[j];
+      for (int blindIndex = blindToStartFrom; blindIndex < _schedule.blinds.length; blindIndex++) {
+        Blind currentBlind = _schedule.blinds[blindIndex];
 
         if (currentBlind.smallBlind % currentChip.value != 0) {
           allBlindsDivisibleByChip = false;
@@ -44,18 +45,20 @@ class ChipComponent {
       }
 
       if (allBlindsDivisibleByChip) {
-        for (int k = i - 1; k >= 0; k--) {
-          Chip chipToEliminate = chips[k];
-          if (chipToEliminate.colorUp) {
-            chipToEliminate.hide = true;
-          }
-          chipToEliminate.colorUp = true;
-        }
+        colorUpChips(chips.getRange(0, chipIndex));
         break;
       }
-
     }
 
+  }
+
+  void colorUpChips(List<Chip> chips) {
+    chips.forEach((Chip chipToColorUp) {
+      if (chipToColorUp.colorUp) {
+        chipToColorUp.hide = true;
+      }
+      chipToColorUp.colorUp = true;
+    });
   }
 
   List<Chip> get filteredChipList {
