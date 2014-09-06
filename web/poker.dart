@@ -1,4 +1,3 @@
-import 'package:di/di.dart';
 import 'package:angular/angular.dart';
 import 'package:angular/application_factory.dart';
 import 'package:angular/animate/module.dart';

@@ -6,6 +6,7 @@ import '../schedule/break/break.dart';
 import "../schedule/schedule.dart";
 import "../schedule/ScheduleModel.dart";
 import "../schedule/saved/scheduleService.dart";
+import "../chip/chip.dart";
 import "package:logging/logging.dart";
 import "package:angular/angular.dart";
 import "dart:html";
@@ -45,6 +46,8 @@ class AdminComponent {
   Schedule get _schedule => _scheduleModel.schedule;
   List<Break> get breaks => _schedule.breaks;
   List<Blind> get blinds => _schedule.blinds;
+  List<Chip> get chips => _schedule.chips;
+
 
   bool get editMode => _sessionModel.editMode;
 
@@ -133,6 +136,14 @@ class AdminComponent {
 
   void removeBreak(int index) {
     _schedule.breaks.removeAt(index);
+  }
+
+  void addChip(int index){
+    _schedule.chips.insert(index, new Chip(value: 15, color: "pink"));
+  }
+
+  void removeChip(int index) {
+    _schedule.chips.removeAt(index);
   }
 
 

@@ -8,7 +8,7 @@ packages:
   angular:
     description: angular
     source: hosted
-    version: "0.12.0"
+    version: "0.14.0"
   args:
     description: args
     source: hosted
@@ -44,7 +44,7 @@ packages:
   di:
     description: di
     source: hosted
-    version: "0.0.40"
+    version: "2.0.2"
   firebase:
     description:
       ref: dependency-update
@@ -59,7 +59,7 @@ packages:
   intl:
     description: intl
     source: hosted
-    version: "0.9.10"
+    version: "0.11.6"
   js:
     description: js
     source: hosted
@@ -87,7 +87,7 @@ packages:
   perf_api:
     description: perf_api
     source: hosted
-    version: "0.0.8"
+    version: "0.0.9"
   polymer:
     description: polymer
     source: hosted
@@ -103,7 +103,7 @@ packages:
   route_hierarchical:
     description: route_hierarchical
     source: hosted
-    version: "0.4.21"
+    version: "0.4.22"
   smoke:
     description: smoke
     source: hosted
@@ -112,6 +112,10 @@ packages:
     description: source_maps
     source: hosted
     version: "0.9.2+3"
+  source_span:
+    description: source_span
+    source: hosted
+    version: "1.0.0"
   stack_trace:
     description: stack_trace
     source: hosted

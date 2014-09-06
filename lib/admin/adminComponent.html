@@ -51,6 +51,8 @@
 <form ng-if="cmp.editMode">
 
     <h2 class="text-danger">Editing Schedule: {{cmp.loadedScheduleName}}</h2>
+
+    <br /><br />
     <strong>Blinds</strong>
     <div ng-repeat="blind in cmp.blinds">
         <div class="row">
@@ -74,6 +76,9 @@
             </div>
         </div>
     </div>
+
+
+    <br /><br />
     <strong>Breaks</strong>
     <div ng-repeat="aBreak in cmp.breaks">
         <div class="row">
@@ -93,6 +98,31 @@
             </div>
         </div>
     </div>
+
+
+    <br /><br />
+    <strong>Chips</strong>
+    <div ng-repeat="chip in cmp.chips">
+        <div class="row">
+            <div class="form-group col-sm-2">
+                <label>Color</label>
+                <input class="form-control" type="text" ng-model="chip.color">
+            </div>
+            <div class="form-group col-sm-2">
+                <label>Value</label>
+                <input class="form-control" type="number" ng-model="chip.value">
+            </div>
+            <div class="col-sm-1">
+                <paper-button label="+" class="colored" ng-click="cmp.addChip($index)"></paper-button>
+            </div>
+            <div class="col-sm-1">
+                <paper-button label="-" class="colored" ng-click="cmp.removeChip($index)"></paper-button>
+            </div>
+        </div>
+    </div>
+
+
+
     <div class="row">
         <div class="col-sm-2">
             <paper-button label="Save" class="colored" ng-click="cmp.saveSchedule()"></paper-button>
