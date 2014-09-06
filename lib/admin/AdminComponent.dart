@@ -44,6 +44,12 @@ class AdminComponent {
 
 
   Schedule get _schedule => _scheduleModel.schedule;
+
+  int get levelLength => _schedule.levelLength;
+  void set levelLength(int length) {
+    _schedule.levelLength = length;
+  }
+
   List<Break> get breaks => _schedule.breaks;
   List<Blind> get blinds => _schedule.blinds;
   List<Chip> get chips => _schedule.chips;

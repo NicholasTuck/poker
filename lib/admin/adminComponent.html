@@ -48,12 +48,26 @@
 </div>
 <br/><br/>
 
+
+
 <form ng-if="cmp.editMode">
 
     <h2 class="text-danger">Editing Schedule: {{cmp.loadedScheduleName}}</h2>
 
     <br /><br />
     <strong>Blinds</strong>
+    <br />
+
+    <div>
+        <div class="row">
+            <div class="form-group col-sm-2">
+                <label>Level Length</label>
+                <input class="form-control" type="number" min="0" ng-model="cmp.levelLength">
+            </div>
+        </div>
+    </div>
+    <br /><br />
+
     <div ng-repeat="blind in cmp.blinds">
         <div class="row">
             <div class="form-group col-sm-2">
